@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Integracao continua do cliente web: os mesmos comandos que rodam localmente.
+# ---------------------------------------------------------------------------
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Lint, testes e build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Verificacao de tipos
+        run: npm run typecheck
+
+      - name: Testes
+        run: npm test
+
+      - name: Build de producao
+        run: npm run build
