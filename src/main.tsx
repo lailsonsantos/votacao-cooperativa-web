@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App } from './App';
 import './estilos/global.css';
 
-// retry: 1 porque um 409 de voto duplicado nunca vira sucesso; insistir so
+// retry: 1 porque um 409 de voto duplicado nunca vira sucesso; insistir só
 // atrasa a mensagem de erro.
 const queryClient = new QueryClient({
   defaultOptions: {

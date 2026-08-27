@@ -2,7 +2,7 @@
  * Converte `dd/MM/yyyy` para `yyyy-MM-dd`, formato exigido pelo input nativo.
  *
  * @param valor data no formato do Anexo 1
- * @returns a data em ISO, ou string vazia se o formato nao for reconhecido
+ * @returns a data em ISO, ou string vazia se o formato não for reconhecido
  */
 export function paraIso(valor: string): string {
   const partes = valor.split('/');

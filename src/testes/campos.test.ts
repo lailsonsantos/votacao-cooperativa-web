@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { paraBrasileiro, paraIso } from '../mobile/campos/data';
 
 /**
- * Testes da conversao de data entre o formato do Anexo 1 e o do input nativo.
+ * Testes da conversão de data entre o formato do Anexo 1 e o do input nativo.
  */
 describe('conversao de data do Anexo 1', () => {
   it('converte dd/MM/yyyy para o formato ISO do input nativo', () => {

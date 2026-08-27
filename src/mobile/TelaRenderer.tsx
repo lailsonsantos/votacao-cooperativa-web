@@ -9,8 +9,8 @@ import { useTela, URL_TELA_INICIAL } from './hooks/useTela';
  * @returns o simulador com a tela corrente
  */
 export function TelaRenderer({ urlInicial = URL_TELA_INICIAL }: { urlInicial?: string }) {
-  // Este componente nao sabe o que e pauta, sessao ou voto. Le o JSON, escolhe
-  // entre FORMULARIO e SELECAO, e devolve o que o usuario preencheu.
+  // Este componente não sabe o que e pauta, sessão ou voto. Le o JSON, escolhe
+  // entre FORMULARIO e SELECAO, e devolve o que o usuário preencheu.
   const {
     tela,
     carregando,
@@ -55,9 +55,9 @@ export function TelaRenderer({ urlInicial = URL_TELA_INICIAL }: { urlInicial?: s
           </div>
         )}
 
-        {/* O indicador de carga so aparece na primeira carga. Nas transicoes a
-            tela anterior permanece visivel e os controles ficam desabilitados,
-            o que evita o piscar branco a cada acao. */}
+        {/* O indicador de carga só aparece na primeira carga. Nas transições a
+            tela anterior permanece visível e os controles ficam desabilitados,
+            o que evita o piscar branco a cada ação. */}
         {carregando && !tela && <p className="tela-texto">Carregando…</p>}
 
         {tela?.tipo === 'FORMULARIO' && (
@@ -80,7 +80,7 @@ export function TelaRenderer({ urlInicial = URL_TELA_INICIAL }: { urlInicial?: s
           />
         )}
 
-        {/* Blindagem contra um tipo de tela que este cliente nao conhece. */}
+        {/* Blindagem contra um tipo de tela que este cliente não conhece. */}
         {tela && tela.tipo !== 'FORMULARIO' && tela.tipo !== 'SELECAO' && (
           <div className="alerta alerta-aviso" role="alert">
             Tipo de tela nao suportado nesta versao do aplicativo:{' '}

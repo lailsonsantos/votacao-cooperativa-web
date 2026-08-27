@@ -3,13 +3,13 @@ import { Painel } from './painel/Painel';
 import { TelaRenderer } from './mobile/TelaRenderer';
 import { BASE_URL } from './api/cliente';
 
-/** Abas disponiveis na aplicacao. */
+/** Abas disponiveis na aplicação. */
 type Aba = 'painel' | 'simulador';
 
 /**
- * Casca da aplicacao, com as duas visoes lado a lado.
+ * Casca da aplicação, com as duas visoes lado a lado.
  *
- * @returns a aplicacao completa
+ * @returns a aplicação completa
  */
 export function App() {
   const [aba, setAba] = useState<Aba>('painel');

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 /**
- * Cliente HTTP compartilhado pela aplicacao.
+ * Cliente HTTP compartilhado pela aplicação.
  */
 export const BASE_URL: string =
   import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080';
 
-/** Instancia do axios com URL base e timeout definidos. */
+/** Instância do axios com URL base e timeout definidos. */
 export const api = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
   timeout: 10_000,
@@ -25,11 +25,11 @@ export interface ProblemDetail {
 }
 
 /**
- * Extrai a mensagem de erro do ProblemDetail. O backend ja escreve o texto para
- * o usuario final, entao prefiro ele a qualquer mensagem do axios.
+ * Extrai a mensagem de erro do ProblemDetail. O backend já escreve o texto para
+ * o usuário final, entao prefiro ele a qualquer mensagem do axios.
  *
  * @param erro erro capturado na chamada
- * @returns mensagem apresentavel na interface
+ * @returns mensagem apresentável na interface
  */
 export function mensagemDeErro(erro: unknown): string {
   if (axios.isAxiosError<ProblemDetail>(erro)) {

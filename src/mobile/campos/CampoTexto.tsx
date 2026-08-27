@@ -1,7 +1,7 @@
 import type { ItemTexto } from '../types';
 
 /**
- * Renderiza um item do tipo TEXTO: conteudo somente leitura.
+ * Renderiza um item do tipo TEXTO: conteúdo somente leitura.
  *
  * @param props.item item de texto vindo do servidor
  * @returns o paragrafo correspondente

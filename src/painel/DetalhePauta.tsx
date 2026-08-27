@@ -12,7 +12,7 @@ interface Props {
 }
 
 /**
- * Detalhe de uma pauta: abertura de sessao, votacao e apuracao.
+ * Detalhe de uma pauta: abertura de sessão, votação e apuração.
  *
  * @param props identificador da pauta e callback de retorno
  * @returns o detalhe da pauta
@@ -32,12 +32,12 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
   /**
    * Envia o voto do CPF informado.
    *
-   * @param opcao opcao escolhida
+   * @param opcao opção escolhida
    */
   function enviarVoto(opcao: OpcaoVoto) {
     registrar.mutate(
       { pautaId, cpf, opcao },
-      // Limpa o CPF pra proxima pessoa nao herdar o numero de quem votou antes.
+      // Limpa o CPF pra próxima pessoa não herdar o número de quem votou antes.
       { onSuccess: () => setCpf('') },
     );
   }

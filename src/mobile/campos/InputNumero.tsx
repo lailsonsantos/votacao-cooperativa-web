@@ -1,14 +1,14 @@
 import type { PropsCampo } from './InputTexto';
 
 /**
- * Renderiza um item do tipo INPUT_NUMERO.
+ * Renderiza um item do tipo INPUT_NÚMERO.
  *
- * @param props campos do item, valor atual e callback de alteracao
+ * @param props campos do item, valor atual e callback de alteração
  * @returns o campo de entrada numerica
  */
 export function InputNumero({ item, valor, aoAlterar }: PropsCampo) {
   // Converte pra number antes de guardar: o Anexo 1 mostra 999 sem aspas.
-  // Campo vazio vira string vazia, e nao NaN.
+  // Campo vazio vira string vazia, e não NaN.
   return (
     <div className="tela-campo">
       <label className="tela-rotulo" htmlFor={item.id}>

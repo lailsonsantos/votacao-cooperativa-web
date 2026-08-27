@@ -13,11 +13,11 @@ export interface ItemTexto {
 /** Campo de entrada dentro de um FORMULARIO. */
 export interface ItemInput {
   tipo: 'INPUT_TEXTO' | 'INPUT_NUMERO' | 'INPUT_DATA';
-  /** Chave com que o valor digitado sera enviado no corpo do POST da acao. */
+  /** Chave com que o valor digitado sera enviado no corpo do POST da ação. */
   id: string;
   /** Rotulo exibido acima do campo. */
   titulo?: string;
-  /** Valor inicial. Numero em INPUT_NUMERO, texto nos demais. */
+  /** Valor inicial. Número em INPUT_NÚMERO, texto nos demais. */
   valor?: string | number | null;
 }
 
@@ -26,24 +26,24 @@ export interface ItemInput {
  */
 export type ItemTela = ItemTexto | ItemInput | { tipo: string; [chave: string]: unknown };
 
-/** Corpo fixo que acompanha uma acao, definido pelo servidor. */
+/** Corpo fixo que acompanha uma ação, definido pelo servidor. */
 export type CorpoAcao = Record<string, unknown>;
 
-/** Botao de acao no rodape de um FORMULARIO. */
+/** Botão de ação no rodape de um FORMULARIO. */
 export interface Botao {
   texto: string;
   url: string;
   body?: CorpoAcao;
 }
 
-/** Opcao acionavel de uma tela SELECAO. */
+/** Opção acionável de uma tela SELECAO. */
 export interface ItemSelecao {
   texto: string;
   url: string;
   body?: CorpoAcao;
 }
 
-/** Tela FORMULARIO: colecao de itens com um ou dois botoes no rodape. */
+/** Tela FORMULARIO: coleção de itens com um ou dois botões no rodape. */
 export interface TelaFormulario {
   tipo: 'FORMULARIO';
   titulo: string;
@@ -52,7 +52,7 @@ export interface TelaFormulario {
   botaoCancelar?: Botao;
 }
 
-/** Tela SELECAO: lista de opcoes, cada uma com sua propria acao. */
+/** Tela SELECAO: lista de opções, cada uma com sua própria ação. */
 export interface TelaSelecao {
   tipo: 'SELECAO';
   titulo: string;
@@ -66,7 +66,7 @@ export type Tela = TelaFormulario | TelaSelecao;
  * Verifica se um item e um campo de entrada.
  *
  * @param item item vindo do servidor
- * @returns true quando o item aceita entrada do usuario
+ * @returns true quando o item aceita entrada do usuário
  */
 export function ehInput(item: ItemTela): item is ItemInput {
   return (
@@ -80,7 +80,7 @@ export function ehInput(item: ItemTela): item is ItemInput {
  * Verifica se um item e texto somente leitura.
  *
  * @param item item vindo do servidor
- * @returns true quando o item e apenas exibicao
+ * @returns true quando o item e apenas exibição
  */
 export function ehTexto(item: ItemTela): item is ItemTexto {
   return item.tipo === 'TEXTO';

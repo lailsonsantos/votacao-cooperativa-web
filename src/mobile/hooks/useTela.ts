@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL, mensagemDeErro } from '../../api/cliente';
 import { ehInput, type CorpoAcao, type ItemTela, type Tela } from '../types';
 
-/** Valores digitados pelo usuario, indexados pelo `id` de cada campo. */
+/** Valores digitados pelo usuário, indexados pelo `id` de cada campo. */
 export type ValoresCampos = Record<string, string | number>;
 
 /** Estado exposto pelo hook ao renderizador. */
@@ -12,7 +12,7 @@ export interface EstadoTela {
   carregando: boolean;
   erro: string | null;
   valores: ValoresCampos;
-  /** Historico de URLs visitadas, usado pelo botao "voltar" do simulador. */
+  /** Historico de URLs visitadas, usado pelo botão "voltar" do simulador. */
   podeVoltar: boolean;
   definirValor: (id: string, valor: string | number) => void;
   navegar: (url: string) => void;
@@ -22,10 +22,10 @@ export interface EstadoTela {
 }
 
 /**
- * Estado e navegacao do cliente Server-Driven UI.
+ * Estado e navegação do cliente Server-Driven UI.
  *
  * @param urlInicial URL da primeira tela a carregar
- * @returns o estado da tela atual e as acoes disponiveis
+ * @returns o estado da tela atual e as ações disponiveis
  */
 export function useTela(urlInicial: string): EstadoTela {
   const [tela, setTela] = useState<Tela | null>(null);
@@ -36,7 +36,7 @@ export function useTela(urlInicial: string): EstadoTela {
 
   /**
    * Semeia o estado com os valores iniciais que vieram do servidor. Sem isso, um
-   * campo ja preenchido apareceria na tela mas nao seria enviado.
+   * campo já preenchido apareceria na tela mas não seria enviado.
    *
    * @param itens itens da tela recem-carregada
    * @returns o mapa de valores iniciais
@@ -54,7 +54,7 @@ export function useTela(urlInicial: string): EstadoTela {
   /**
    * Aplica uma tela recebida do servidor ao estado local.
    *
-   * @param nova tela devolvida pela requisicao
+   * @param nova tela devolvida pela requisição
    */
   const aplicar = useCallback(
     (nova: Tela) => {
@@ -90,10 +90,10 @@ export function useTela(urlInicial: string): EstadoTela {
   );
 
   /**
-   * Executa uma acao por POST e renderiza a tela devolvida.
+   * Executa uma ação por POST e renderiza a tela devolvida.
    *
-   * @param url URL absoluta da acao
-   * @param corpo corpo fixo definido no botao ou no item de selecao
+   * @param url URL absoluta da ação
+   * @param corpo corpo fixo definido no botão ou no item de seleção
    */
   const executar = useCallback(
     async (url: string, corpo: CorpoAcao = {}) => {
@@ -145,7 +145,7 @@ export function useTela(urlInicial: string): EstadoTela {
    * Registra o valor digitado em um campo.
    *
    * @param id chave do campo, definida pelo servidor
-   * @param valor valor informado pelo usuario
+   * @param valor valor informado pelo usuário
    */
   const definirValor = useCallback((id: string, valor: string | number) => {
     setValores((anteriores) => ({ ...anteriores, [id]: valor }));
@@ -153,7 +153,7 @@ export function useTela(urlInicial: string): EstadoTela {
 
   useEffect(() => {
     void carregar(urlInicial);
-    // So na montagem: a URL inicial nao muda.
+    // Só na montagem: a URL inicial não muda.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

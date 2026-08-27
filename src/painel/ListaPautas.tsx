@@ -10,7 +10,7 @@ interface Props {
 /**
  * Lista as pautas cadastradas, da mais recente para a mais antiga.
  *
- * @param props pautas, item selecionado e callback de selecao
+ * @param props pautas, item selecionado e callback de seleção
  * @returns a lista de pautas
  */
 export function ListaPautas({ pautas, selecionada, aoSelecionar }: Props) {
@@ -34,7 +34,7 @@ export function ListaPautas({ pautas, selecionada, aoSelecionar }: Props) {
               type="button"
               className={`lista-item ${selecionada === pauta.id ? 'lista-item--ativo' : ''}`}
               onClick={() => aoSelecionar(pauta.id)}
-              // aria-current comunica a selecao a leitores de tela, que nao
+              // aria-current comunica a seleção a leitores de tela, que não
               // enxergam a diferenca puramente visual do item ativo.
               aria-current={selecionada === pauta.id ? 'true' : undefined}
             >

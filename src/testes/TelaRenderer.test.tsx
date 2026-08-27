@@ -78,7 +78,7 @@ describe('TelaRenderer', () => {
 
     const [url, corpo] = axiosMock.post.mock.calls[0];
     expect(url).toBe('http://api.local/ACAO1');
-    // Esta e a regra central do Anexo 1: body do botao + valores digitados,
+    // Está e a regra central do Anexo 1: body do botão + valores digitados,
     // indexados pelo id de cada campo.
     expect(corpo).toEqual({
       campo1: 'valor1',
@@ -100,7 +100,7 @@ describe('TelaRenderer', () => {
     await waitFor(() => expect(axiosMock.post).toHaveBeenCalled());
 
     // Sem semear o estado com os valores iniciais, um campo pre-preenchido
-    // apareceria na tela mas nao seria enviado — bug silencioso.
+    // apareceria na tela mas não seria enviado — bug silencioso.
     const [, corpo] = axiosMock.post.mock.calls[0];
     expect(corpo).toMatchObject({ idCampoTexto: 'Texto', idCampoNumerico: 999 });
   });
@@ -144,7 +144,7 @@ describe('TelaRenderer', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Cancelar' }));
 
-    // Cancelar e navegacao pura. Se virasse POST, cancelar registraria voto.
+    // Cancelar e navegação pura. Se virasse POST, cancelar registraria voto.
     await waitFor(() =>
       expect(axiosMock.get).toHaveBeenCalledWith('http://api.local/', expect.anything()),
     );
@@ -157,7 +157,7 @@ describe('TelaRenderer', () => {
         tipo: 'FORMULARIO',
         titulo: 'Resultado',
         itens: [{ tipo: 'TEXTO', texto: 'Sim: 1 voto(s)' }],
-        // Sem `body`: o servidor sinaliza navegacao, e o destino e um GET.
+        // Sem `body`: o servidor sinaliza navegação, e o destino e um GET.
         botaoOk: { texto: 'Atualizar', url: 'http://api.local/resultado' },
         botaoCancelar: { texto: 'Voltar', url: 'http://api.local/pautas' },
       },

@@ -1,6 +1,6 @@
 import type { Resultado } from '../api/tipos';
 
-/** Texto apresentado para cada desfecho possivel. */
+/** Texto apresentado para cada desfecho possível. */
 const DESCRICAO: Record<Resultado['resultado'], string> = {
   APROVADA: 'Aprovada',
   REPROVADA: 'Reprovada',
@@ -9,9 +9,9 @@ const DESCRICAO: Record<Resultado['resultado'], string> = {
 };
 
 /**
- * Exibe a apuracao de uma pauta com barra proporcional de votos.
+ * Exibe a apuração de uma pauta com barra proporcional de votos.
  *
- * @param props.resultado apuracao devolvida pela API
+ * @param props.resultado apuração devolvida pela API
  * @returns o painel de resultado
  */
 export function PainelResultado({ resultado }: { resultado: Resultado }) {

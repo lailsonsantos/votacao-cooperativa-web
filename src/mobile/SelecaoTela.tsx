@@ -11,8 +11,8 @@ interface Props {
 /**
  * Renderiza uma tela do tipo SELECAO do Anexo 1.
  *
- * @param props tela e callbacks de interacao
- * @returns a lista de opcoes renderizada
+ * @param props tela e callbacks de interação
+ * @returns a lista de opções renderizada
  */
 export function SelecaoTela({ tela, desabilitado, aoAcionar, aoNavegar }: Props) {
   return (
@@ -22,7 +22,7 @@ export function SelecaoTela({ tela, desabilitado, aoAcionar, aoNavegar }: Props)
       <ul className="tela-lista">
         {(tela.itens ?? []).map((item, indice) => (
           <li key={`${item.url}-${indice}`}>
-            {/* Com body e acao (POST); sem body e so navegacao (GET). Senao a
+            {/* Com body e ação (POST); sem body e só navegação (GET). Senao a
                 lista de pautas dispararia um POST por item tocado. */}
             <button
               type="button"

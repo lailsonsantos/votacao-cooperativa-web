@@ -2,7 +2,7 @@ import { api } from './cliente';
 import type { OpcaoVoto, Pagina, Pauta, Resultado, Sessao } from './tipos';
 
 /**
- * Funcoes de acesso a API REST v1.
+ * Funções de acesso a API REST v1.
  */
 
 /**
@@ -33,8 +33,8 @@ export async function buscarPauta(id: string): Promise<Pauta> {
 /**
  * Cadastra uma nova pauta.
  *
- * @param titulo titulo da pauta
- * @param descricao descricao opcional
+ * @param titulo título da pauta
+ * @param descricao descrição opcional
  * @returns a pauta criada
  */
 export async function criarPauta(titulo: string, descricao: string): Promise<Pauta> {
@@ -43,14 +43,14 @@ export async function criarPauta(titulo: string, descricao: string): Promise<Pau
 }
 
 /**
- * Abre a sessao de votacao de uma pauta.
+ * Abre a sessão de votação de uma pauta.
  *
  * @param pautaId identificador da pauta
- * @param duracaoMinutos duracao desejada. Omitido, o corpo segue sem a
- *                       propriedade e o servidor aplica o proprio padrao —
- *                       o valor desse padrao e decisao do backend
+ * @param duracaoMinutos duração desejada. Omitido, o corpo segue sem a
+ *                       propriedade e o servidor aplica o próprio padrão —
+ *                       o valor desse padrão e decisao do backend
  *
- * @returns a sessao aberta
+ * @returns a sessão aberta
  */
 export async function abrirSessao(
   pautaId: string,
@@ -63,10 +63,10 @@ export async function abrirSessao(
 }
 
 /**
- * Consulta a sessao de uma pauta.
+ * Consulta a sessão de uma pauta.
  *
  * @param pautaId identificador da pauta
- * @returns a sessao, ou null se ainda nao existir
+ * @returns a sessão, ou null se ainda não existir
  */
 export async function consultarSessao(pautaId: string): Promise<Sessao | null> {
   try {
@@ -83,7 +83,7 @@ export async function consultarSessao(pautaId: string): Promise<Sessao | null> {
  *
  * @param pautaId identificador da pauta
  * @param associadoId CPF do associado
- * @param opcao opcao escolhida
+ * @param opcao opção escolhida
  */
 export async function votar(
   pautaId: string,
@@ -97,7 +97,7 @@ export async function votar(
  * Apura o resultado de uma pauta.
  *
  * @param pautaId identificador da pauta
- * @returns o resultado, ou null se a pauta ainda nao teve sessao
+ * @returns o resultado, ou null se a pauta ainda não teve sessão
  */
 export async function apurar(pautaId: string): Promise<Resultado | null> {
   try {
@@ -110,7 +110,7 @@ export async function apurar(pautaId: string): Promise<Resultado | null> {
 }
 
 /**
- * Verifica se um erro de requisicao carrega um status HTTP especifico.
+ * Verifica se um erro de requisição carrega um status HTTP especifico.
  *
  * @param erro erro capturado
  * @param status status procurado

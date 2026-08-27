@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 /**
- * Variaveis de ambiente da aplicacao.
+ * Variaveis de ambiente da aplicação.
  */
 interface ImportMetaEnv {
   /** URL base da API, sem o sufixo /api/v1. */

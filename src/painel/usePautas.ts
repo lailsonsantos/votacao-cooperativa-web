@@ -13,7 +13,7 @@ import type { OpcaoVoto } from '../api/tipos';
  * Hooks de acesso a API REST para o painel administrativo.
  */
 
-/** Chaves de cache, centralizadas para que a invalidacao nunca erre o alvo. */
+/** Chaves de cache, centralizadas para que a invalidação nunca erre o alvo. */
 export const chaves = {
   pautas: ['pautas'] as const,
   sessao: (id: string) => ['sessao', id] as const,
@@ -33,10 +33,10 @@ export function usePautas() {
 }
 
 /**
- * Consulta a sessao de uma pauta, atualizando enquanto ela estiver aberta.
+ * Consulta a sessão de uma pauta, atualizando enquanto ela estiver aberta.
  *
  * @param pautaId identificador da pauta, ou null para desabilitar a consulta
- * @returns o resultado da consulta da sessao
+ * @returns o resultado da consulta da sessão
  */
 export function useSessao(pautaId: string | null) {
   return useQuery({
@@ -49,10 +49,10 @@ export function useSessao(pautaId: string | null) {
 }
 
 /**
- * Apura o resultado de uma pauta, atualizando enquanto a votacao acontece.
+ * Apura o resultado de uma pauta, atualizando enquanto a votação acontece.
  *
  * @param pautaId identificador da pauta, ou null para desabilitar a consulta
- * @returns o resultado da apuracao
+ * @returns o resultado da apuração
  */
 export function useResultado(pautaId: string | null) {
   return useQuery({
@@ -66,7 +66,7 @@ export function useResultado(pautaId: string | null) {
 /**
  * Cadastra uma nova pauta e atualiza a listagem.
  *
- * @returns a mutacao de criacao de pauta
+ * @returns a mutação de criação de pauta
  */
 export function useCriarPauta() {
   const cliente = useQueryClient();
@@ -78,9 +78,9 @@ export function useCriarPauta() {
 }
 
 /**
- * Abre a sessao de votacao de uma pauta.
+ * Abre a sessão de votação de uma pauta.
  *
- * @returns a mutacao de abertura de sessao
+ * @returns a mutação de abertura de sessão
  */
 export function useAbrirSessao() {
   const cliente = useQueryClient();
@@ -95,9 +95,9 @@ export function useAbrirSessao() {
 }
 
 /**
- * Registra um voto e atualiza a apuracao exibida.
+ * Registra um voto e atualiza a apuração exibida.
  *
- * @returns a mutacao de registro de voto
+ * @returns a mutação de registro de voto
  */
 export function useVotar() {
   const cliente = useQueryClient();

@@ -4,18 +4,18 @@ import type { ItemInput } from '../types';
  * Propriedades comuns a todos os campos de entrada.
  */
 export interface PropsCampo {
-  /** Item vindo do servidor, com id, titulo e valor inicial. */
+  /** Item vindo do servidor, com id, título e valor inicial. */
   item: ItemInput;
   /** Valor atual do campo no estado do renderizador. */
   valor: string | number;
-  /** Notifica o renderizador de uma alteracao. */
+  /** Notifica o renderizador de uma alteração. */
   aoAlterar: (valor: string | number) => void;
 }
 
 /**
  * Renderiza um item do tipo INPUT_TEXTO.
  *
- * @param props campos do item, valor atual e callback de alteracao
+ * @param props campos do item, valor atual e callback de alteração
  * @returns o campo de entrada de texto
  */
 export function InputTexto({ item, valor, aoAlterar }: PropsCampo) {

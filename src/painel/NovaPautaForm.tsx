@@ -4,10 +4,10 @@ import { mensagemDeErro } from '../api/cliente';
 import type { Pauta } from '../api/tipos';
 
 /**
- * Formulario de cadastro de pauta.
+ * Formulário de cadastro de pauta.
  *
  * @param props.aoCriar callback disparado com a pauta recem-criada
- * @returns o formulario de cadastro
+ * @returns o formulário de cadastro
  */
 export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) {
   const [titulo, setTitulo] = useState('');
@@ -15,9 +15,9 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
   const criar = useCriarPauta();
 
   /**
-   * Envia o formulario e limpa os campos em caso de sucesso.
+   * Envia o formulário e limpa os campos em caso de sucesso.
    *
-   * @param evento evento de submissao do formulario
+   * @param evento evento de submissao do formulário
    */
   function enviar(evento: FormEvent) {
     evento.preventDefault();
@@ -27,8 +27,8 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
       { titulo: titulo.trim(), descricao: descricao.trim() },
       {
         onSuccess: (pauta) => {
-          // Limpar so no sucesso preserva o que foi digitado quando a chamada
-          // falha, evitando que o usuario perca o texto por um erro de rede.
+          // Limpar só no sucesso preserva o que foi digitado quando a chamada
+          // falha, evitando que o usuário perca o texto por um erro de rede.
           setTitulo('');
           setDescricao('');
           aoCriar(pauta);

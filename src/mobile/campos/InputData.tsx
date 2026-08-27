@@ -4,11 +4,11 @@ import type { PropsCampo } from './InputTexto';
 /**
  * Renderiza um item do tipo INPUT_DATA.
  *
- * @param props campos do item, valor atual e callback de alteracao
+ * @param props campos do item, valor atual e callback de alteração
  * @returns o campo de entrada de data
  */
 export function InputData({ item, valor, aoAlterar }: PropsCampo) {
-  // O Anexo 1 usa dd/MM/yyyy e o input nativo so aceita ISO, entao converto nas
+  // O Anexo 1 usa dd/MM/yyyy e o input nativo só aceita ISO, entao converto nas
   // duas pontas.
   return (
     <div className="tela-campo">

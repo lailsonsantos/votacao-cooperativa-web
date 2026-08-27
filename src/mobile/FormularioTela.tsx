@@ -19,7 +19,7 @@ interface Props {
 /**
  * Renderiza uma tela do tipo FORMULARIO do Anexo 1.
  *
- * @param props tela, valores digitados e callbacks de interacao
+ * @param props tela, valores digitados e callbacks de interação
  * @returns a tela renderizada
  */
 export function FormularioTela({
@@ -57,7 +57,7 @@ export function FormularioTela({
             }
           }
 
-          // Tipo que este cliente nao conhece: avisa sem derrubar a tela.
+          // Tipo que este cliente não conhece: avisa sem derrubar a tela.
           return <CampoDesconhecido key={indice} tipo={String(item.tipo)} />;
         })}
       </div>
@@ -68,7 +68,7 @@ export function FormularioTela({
             type="button"
             className="botao botao-secundario"
             disabled={desabilitado}
-            // Cancelar so navega. Se enviasse dados, cancelar registraria voto.
+            // Cancelar só navega. Se enviasse dados, cancelar registraria voto.
             onClick={() => aoNavegar(tela.botaoCancelar!.url)}
           >
             {tela.botaoCancelar.texto}
@@ -81,7 +81,7 @@ export function FormularioTela({
             className="botao botao-primario"
             disabled={desabilitado}
             onClick={() =>
-              // Igual ao SELECAO: com `body` e acao (POST), sem `body` e navegacao
+              // Igual ao SELECAO: com `body` é ação (POST), sem `body` é navegação
               // (GET). "Voltar" e "Atualizar" caem no segundo caso.
               tela.botaoOk!.body
                 ? aoAcionar(tela.botaoOk!.url, tela.botaoOk!.body)
