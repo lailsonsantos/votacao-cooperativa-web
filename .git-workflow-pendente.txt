@@ -1,0 +1,6 @@
+O arquivo .github/workflows/ci.yml existe localmente mas nao foi versionado
+porque o token do gh CLI nao tem o escopo `workflow`.
+
+Para versiona-lo:
+  gh auth refresh -s workflow
+  git add .github/workflows/ci.yml && git commit -m "chore: pipeline de CI" && git push

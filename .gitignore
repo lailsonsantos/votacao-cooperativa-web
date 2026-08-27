@@ -1,0 +1,20 @@
+node_modules/
+dist/
+dist-ssr/
+
+# Variaveis locais: cada maquina aponta para a sua API.
+.env.local
+.env.*.local
+
+# IDEs
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+
+# Sistema operacional
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
