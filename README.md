@@ -1,37 +1,142 @@
 # Votação Cooperativa — Web
 
-Cliente web responsivo da API de votação em assembleias cooperativas. Funciona em
-desktop e celular a partir de uma única base de código.
+Cliente web responsivo de um sistema de **votação em assembleias de
+cooperativas**. Funciona em desktop e celular a partir de uma única base de
+código.
+
+No cooperativismo, cada associado tem direito a **um voto**, e as decisões são
+tomadas em assembleia. O sistema digitaliza esse processo: cadastra-se uma
+**pauta** (o assunto em deliberação), abre-se uma **sessão de votação** com prazo
+determinado, os associados votam **Sim** ou **Não** — cada um uma única vez — e
+ao final o resultado é apurado.
 
 **Backend (repositório separado):** https://github.com/lailsonsantos/votacao-cooperativa-api
 
-## No ar
-
-**https://votacao-cooperativa-web.onrender.com**
-
-Duas abas: **Painel** consome a API REST; **Simulador** renderiza as telas do
-Anexo 1 servidas por https://votacao-cooperativa-api.onrender.com/api/v1/telas.
-
 ---
 
-## O que é
+## No ar
 
-O enunciado do teste diz textualmente: *"A aplicação cliente não faz parte da
-avaliação, apenas os componentes do servidor."* Este repositório é, portanto, um
-**diferencial** — mas não decorativo. Ele existe para provar, de forma
-executável, que o backend cumpre o contrato de telas do Anexo 1.
+### **https://votacao-cooperativa-web.onrender.com**
 
-A aplicação tem duas visões, alternáveis por aba, que consomem as **duas
-superfícies HTTP** do backend:
+A aplicação tem duas abas, que consomem as **duas superfícies HTTP** do backend:
 
 | Aba | Consome | O que demonstra |
 |---|---|---|
-| **Painel** | `/api/v1/**` (REST) | A superfície REST é completa e utilizável: cadastro, abertura de sessão, voto e apuração ao vivo |
-| **Simulador** | `/api/v1/telas/**` (Server-Driven UI) | O contrato do Anexo 1 funciona ponta a ponta |
+| **Painel** | `/api/v1/**` (REST) | Cadastro, abertura de sessão, voto e apuração ao vivo |
+| **Simulador** | `/api/v1/telas/**` (Server-Driven UI) | O contrato do Anexo 1 funcionando ponta a ponta |
+
+**Documentação da API:** https://votacao-cooperativa-api.onrender.com/swagger-ui.html
+
+### Sobre a hospedagem
+
+O frontend é um **site estático** no Render: não hiberna, não tem cold start e
+carrega instantaneamente.
+
+A **API**, porém, é um serviço com o comportamento abaixo:
+
+| | `starter` (em uso) | `free` |
+|---|---|---|
+| Hiberna | Não | Após **15 min** sem requisições |
+| Tempo para acordar | — | **~50 s** na primeira requisição |
+
+Se a API estiver no plano `free` e a primeira ação da tela demorar, ela não está
+quebrada — está acordando. A tela apenas fica em "Carregando…" até a resposta
+chegar.
+
+> O banco de dados usa o plano gratuito do Render, que **expira 30 dias após a
+> criação**. Depois disso a aplicação continua no ar, mas sem dados.
+
+---
+
+## Instalação e execução
+
+**Pré-requisitos:** Node 20+ e a API rodando (local ou em produção).
+
+```bash
+git clone https://github.com/lailsonsantos/votacao-cooperativa-web.git
+cd votacao-cooperativa-web
+
+npm install
+cp .env.example .env.local
+```
+
+Edite o `.env.local` apontando para a API:
+
+```bash
+# API local
+VITE_API_BASE_URL=http://localhost:8080
+
+# ou a API publicada — permite rodar o front local sem subir o backend
+VITE_API_BASE_URL=https://votacao-cooperativa-api.onrender.com
+```
+
+```bash
+npm run dev     # http://localhost:5173
+```
+
+A URL **não** inclui o sufixo `/api/v1` — o cliente o acrescenta.
+
+### Scripts
+
+| Script | O que faz |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento com recarga automática |
+| `npm run build` | Typecheck + bundle de produção em `dist/` |
+| `npm run preview` | Serve o bundle já compilado |
+| `npm test` | Suíte de testes (Vitest) |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript sem emitir arquivos |
+
+### Se o front local não conversar com a API
+
+Duas causas cobrem quase todos os casos:
+
+1. **CORS.** A API só aceita origens declaradas. Suba o backend com
+   `APP_CORS_ALLOWED_ORIGINS=http://localhost:5173`.
+2. **A variável não foi aplicada.** O Vite injeta `VITE_API_BASE_URL` em tempo de
+   **build**; ao alterar o `.env.local`, reinicie o `npm run dev`.
+
+O endereço da API em uso aparece no cabeçalho da aplicação — é o jeito mais
+rápido de confirmar para onde ela está apontando.
+
+### Abrir de um celular na mesma rede
+
+O Vite já escuta em `0.0.0.0`. Aponte o `.env.local` para o IP da máquina e
+libere a origem no backend:
+
+```bash
+# .env.local
+VITE_API_BASE_URL=http://192.168.0.10:8080
+```
+
+```bash
+# no backend
+APP_CORS_ALLOWED_ORIGINS=http://192.168.0.10:5173 \
+APP_CALLBACK_BASE_URL=http://192.168.0.10:8080 \
+docker compose up
+```
+
+`APP_CALLBACK_BASE_URL` importa porque as URLs das telas são **absolutas**: com
+`localhost` o celular tentaria falar consigo mesmo.
+
+### Docker
+
+```bash
+docker build --build-arg VITE_API_BASE_URL=http://localhost:8080 -t votacao-web .
+docker run -p 5173:80 votacao-web
+```
+
+A URL da API é argumento de **build**, não de execução — trocá-la exige
+reconstruir a imagem, que é o comportamento esperado de um bundle estático.
 
 ---
 
 ## O simulador é a peça central
+
+O enunciado do teste diz textualmente: *"A aplicação cliente não faz parte da
+avaliação, apenas os componentes do servidor."* Este repositório é, portanto, um
+**diferencial** — mas não decorativo. Ele prova, de forma executável, que o
+backend cumpre o contrato de telas do Anexo 1.
 
 O renderizador em `src/mobile/` **não conhece o domínio**. Não sabe o que é
 pauta, sessão ou voto. Ele:
@@ -43,11 +148,10 @@ pauta, sessão ou voto. Ele:
 5. ao acionar um botão, envia `POST` para a `url` com `{ ...body, ...valores }`;
 6. renderiza a tela que voltar.
 
-É justamente essa ignorância deliberada que faz o simulador servir como prova: se
-o fluxo completo funciona — cadastrar pauta, abrir sessão, informar CPF, votar,
-ver o resultado — então o contrato do Anexo 1 está correto, porque não há nenhum
-conhecimento de domínio embutido no cliente para compensar uma resposta errada do
-servidor.
+É essa ignorância deliberada que faz o simulador servir como prova: se o fluxo
+completo funciona — cadastrar pauta, abrir sessão, informar CPF, votar, ver o
+resultado — então o contrato está correto, porque não há nenhum conhecimento de
+domínio embutido no cliente para compensar uma resposta errada do servidor.
 
 ```
 src/mobile/
@@ -91,58 +195,6 @@ campo desconhecido vira um aviso discreto e o resto da tela continua renderizand
 Isso é a contrapartida, no cliente, da política de versionamento documentada no
 backend: *mudança compatível não sobe a versão porque o cliente ignora
 graciosamente o que não conhece.*
-
----
-
-## Como executar
-
-Requer **Node 20+** e a API rodando.
-
-```bash
-npm install
-cp .env.example .env.local     # ajuste VITE_API_BASE_URL se necessário
-npm run dev                    # http://localhost:5173
-```
-
-| Script | O que faz |
-|---|---|
-| `npm run dev` | Servidor de desenvolvimento |
-| `npm run build` | Typecheck + bundle de produção em `dist/` |
-| `npm run preview` | Serve o bundle compilado |
-| `npm test` | Suíte de testes (Vitest) |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript sem emitir |
-
-### Abrir de um celular na mesma rede
-
-O Vite já escuta em `0.0.0.0`. Aponte o `.env.local` para o IP da máquina e
-libere a origem no backend:
-
-```bash
-# .env.local
-VITE_API_BASE_URL=http://192.168.0.10:8080
-```
-
-```bash
-# no backend
-APP_CORS_ALLOWED_ORIGINS=http://192.168.0.10:5173 \
-APP_CALLBACK_BASE_URL=http://192.168.0.10:8080 \
-docker compose up
-```
-
-`APP_CALLBACK_BASE_URL` importa porque as URLs das telas são **absolutas**: com
-`localhost` o celular tentaria falar consigo mesmo.
-
-### Docker
-
-```bash
-docker build --build-arg VITE_API_BASE_URL=http://localhost:8080 -t votacao-web .
-docker run -p 5173:80 votacao-web
-```
-
-O Vite injeta `VITE_API_BASE_URL` em tempo de **build**, não de execução — por
-isso ela é argumento de build. Trocar a API exige rebuild, que é o comportamento
-esperado de um bundle estático.
 
 ---
 
@@ -212,23 +264,27 @@ literais do PDF**:
 O frontend é um **site estático**: não hiberna, não tem cold start e é gratuito.
 
 1. Entre em https://render.com com a conta do GitHub.
-2. **Blueprints → New Blueprint Instance** → selecione `votacao-cooperativa-web`.
-3. Depois de criado, defina `VITE_API_BASE_URL` no painel com a URL pública da
-   API (sem o sufixo `/api/v1`) e dispare um novo deploy.
+2. **Blueprints → New Blueprint Instance** → selecione este repositório.
+3. Defina `VITE_API_BASE_URL` no painel com a URL pública da API (sem o sufixo
+   `/api/v1`) e dispare um novo deploy.
 
 O passo 3 não é opcional nem adiável: o Vite injeta essa variável em tempo de
 **build**, então mudar o valor exige reconstruir o bundle. É por isso que o
 primeiro deploy sai apontando para o valor padrão.
 
-Por fim, libere a origem do frontend no backend, em `APP_CORS_ALLOWED_ORIGINS`.
+Por fim, libere a origem do frontend no backend, em `APP_CORS_ALLOWED_ORIGINS` —
+**sem barra no final**, porque o navegador envia o header `Origin` sem ela.
 
 ### Qualquer outra plataforma
 
 O resultado de `npm run build` é um diretório `dist/` de arquivos estáticos, que
-qualquer CDN serve — Cloudflare Pages, Vercel, Netlify, S3. Só há dois requisitos:
+qualquer CDN serve — Cloudflare Pages, Vercel, Netlify, S3. Só há dois
+requisitos:
 
 - **Rewrite de SPA:** toda rota desconhecida deve devolver `index.html`.
 - **`VITE_API_BASE_URL` no ambiente de build**, não no de execução.
+
+---
 
 ## Estrutura
 
