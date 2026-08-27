@@ -200,29 +200,28 @@ literais do PDF**:
 
 ## Deploy
 
-### Heroku
+### Render (configurado)
 
-```bash
-heroku create votacao-cooperativa-web
-heroku buildpacks:set heroku/nodejs
-heroku config:set VITE_API_BASE_URL=https://sua-api.herokuapp.com
-heroku config:set NPM_CONFIG_PRODUCTION=false
-git push heroku main
-```
+O frontend é um **site estático**: não hiberna, não tem cold start e é gratuito.
 
-Depois do deploy, libere a origem no backend:
+1. Entre em https://render.com com a conta do GitHub.
+2. **Blueprints → New Blueprint Instance** → selecione `votacao-cooperativa-web`.
+3. Depois de criado, defina `VITE_API_BASE_URL` no painel com a URL pública da
+   API (sem o sufixo `/api/v1`) e dispare um novo deploy.
 
-```bash
-heroku config:set APP_CORS_ALLOWED_ORIGINS=https://votacao-cooperativa-web-XXXX.herokuapp.com \
-  --app votacao-cooperativa-api
-```
+O passo 3 não é opcional nem adiável: o Vite injeta essa variável em tempo de
+**build**, então mudar o valor exige reconstruir o bundle. É por isso que o
+primeiro deploy sai apontando para o valor padrão.
 
-### Alternativa sem custo — Render
+Por fim, libere a origem do frontend no backend, em `APP_CORS_ALLOWED_ORIGINS`.
 
-[`render.yaml`](render.yaml) declara o site estático. Conecte o repositório em
-https://render.com e aplique o *blueprint*.
+### Qualquer outra plataforma
 
----
+O resultado de `npm run build` é um diretório `dist/` de arquivos estáticos, que
+qualquer CDN serve — Cloudflare Pages, Vercel, Netlify, S3. Só há dois requisitos:
+
+- **Rewrite de SPA:** toda rota desconhecida deve devolver `index.html`.
+- **`VITE_API_BASE_URL` no ambiente de build**, não no de execução.
 
 ## Estrutura
 

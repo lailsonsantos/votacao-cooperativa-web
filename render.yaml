@@ -1,5 +1,12 @@
 # ---------------------------------------------------------------------------
-# Blueprint do Render — alternativa sem custo ao Heroku.
+# Blueprint do Render.
+#
+# O frontend e um site estatico: nao hiberna, nao tem cold start e nao custa
+# nada. Aplique conectando o repositorio em https://render.com.
+#
+# Apos criar, defina VITE_API_BASE_URL com a URL publica da API e refaca o
+# deploy: o Vite injeta essa variavel em tempo de BUILD, entao mudar o valor
+# exige reconstruir o bundle.
 # ---------------------------------------------------------------------------
 services:
   - type: web
@@ -7,11 +14,27 @@ services:
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
+    autoDeploy: true
+
     envVars:
+      # URL publica da API, SEM o sufixo /api/v1. Definida no painel.
       - key: VITE_API_BASE_URL
-        sync: false   # URL publica da API, definida no painel do Render.
+        sync: false
+
     routes:
-      # Aplicacao de pagina unica: toda rota cai no index.
+      # Aplicacao de pagina unica: toda rota desconhecida cai no index, para que
+      # o roteamento aconteca no cliente em vez de virar 404 do servidor.
       - type: rewrite
         source: /*
         destination: /index.html
+
+    headers:
+      # Os assets levam hash no nome, entao podem ser cacheados indefinidamente.
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      # O index NAO pode ser cacheado: e ele que aponta para o hash novo apos um
+      # deploy. Cachea-lo faria o navegador pedir assets que ja nao existem.
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache
