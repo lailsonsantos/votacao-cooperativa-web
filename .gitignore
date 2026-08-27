@@ -2,6 +2,9 @@ node_modules/
 dist/
 dist-ssr/
 
+# Cache incremental do TypeScript
+*.tsbuildinfo
+
 # Variaveis locais: cada maquina aponta para a sua API.
 .env.local
 .env.*.local
