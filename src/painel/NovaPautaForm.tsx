@@ -54,12 +54,12 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
       </div>
 
       <div className="campo">
-        <label htmlFor="descricao">Descricao</label>
+        <label htmlFor="descricao">Descrição</label>
         <textarea
           id="descricao"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
-          placeholder="Atualizacao dos artigos 12 a 18."
+          placeholder="Atualização dos artigos 12 a 18."
           rows={2}
           maxLength={2000}
         />
@@ -73,7 +73,7 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
 
       <button
         type="submit"
-        className="botao botao-primario"
+        className="botão botão-primario"
         disabled={criar.isPending || !titulo.trim()}
       >
         {criar.isPending ? 'Cadastrando…' : 'Cadastrar pauta'}

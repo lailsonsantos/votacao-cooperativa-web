@@ -76,7 +76,7 @@ export function App() {
       </main>
 
       <footer className="rodape">
-        <span>Teste tecnico · Votacao em assembleias cooperativas</span>
+        <span>Teste técnico · Votação em assembleias cooperativas</span>
         <a
           href="https://github.com/lailsonsantos/votacao-cooperativa-api"
           target="_blank"

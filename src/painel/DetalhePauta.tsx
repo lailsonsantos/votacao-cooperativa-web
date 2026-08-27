@@ -48,18 +48,18 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
         ‹ Pautas
       </button>
 
-      {sessao.isLoading && <p className="texto-suave">Carregando sessao…</p>}
+      {sessao.isLoading && <p className="texto-suave">Carregando sessão…</p>}
 
       {semSessao && (
         <div className="cartao">
-          <h2 className="cartao-titulo">Abrir sessao de votacao</h2>
+          <h2 className="cartao-titulo">Abrir sessão de votação</h2>
           <p className="texto-suave">
             Nenhuma sessao foi aberta para esta pauta. Deixe a duracao em branco
             para usar o padrao definido pelo servidor.
           </p>
 
           <div className="campo">
-            <label htmlFor="duracao">Duracao (minutos)</label>
+            <label htmlFor="duracao">Duração (minutos)</label>
             <input
               id="duracao"
               type="number"
@@ -78,7 +78,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
 
           <button
             type="button"
-            className="botao botao-primario"
+            className="botão botão-primario"
             disabled={abrir.isPending}
             onClick={() =>
               abrir.mutate({
@@ -87,7 +87,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
               })
             }
           >
-            {abrir.isPending ? 'Abrindo…' : 'Abrir sessao'}
+            {abrir.isPending ? 'Abrindo…' : 'Abrir sessão'}
           </button>
         </div>
       )}
@@ -135,7 +135,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
           <div className="botoes-voto">
             <button
               type="button"
-              className="botao botao-sim"
+              className="botão botão-sim"
               disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('SIM')}
             >
@@ -143,7 +143,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
             </button>
             <button
               type="button"
-              className="botao botao-nao"
+              className="botão botão-não"
               disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('NAO')}
             >

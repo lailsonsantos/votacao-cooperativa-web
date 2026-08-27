@@ -66,7 +66,7 @@ export function FormularioTela({
         {tela.botaoCancelar && (
           <button
             type="button"
-            className="botao botao-secundario"
+            className="botão botão-secundario"
             disabled={desabilitado}
             // Cancelar só navega. Se enviasse dados, cancelar registraria voto.
             onClick={() => aoNavegar(tela.botaoCancelar!.url)}
@@ -78,7 +78,7 @@ export function FormularioTela({
         {tela.botaoOk && (
           <button
             type="button"
-            className="botao botao-primario"
+            className="botão botão-primario"
             disabled={desabilitado}
             onClick={() =>
               // Igual ao SELECAO: com `body` é ação (POST), sem `body` é navegação

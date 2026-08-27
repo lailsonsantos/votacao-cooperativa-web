@@ -16,15 +16,15 @@ const URL = 'http://api.local/api/v1/telas';
 /** Tela FORMULARIO do exemplo do Anexo 1, com os quatro tipos de item. */
 const FORMULARIO_ANEXO1 = {
   tipo: 'FORMULARIO',
-  titulo: 'TITULO TELA',
+  titulo: 'TÍTULO TELA',
   itens: [
     { tipo: 'TEXTO', texto: 'Lorem ipsum dolor sit amet.' },
     { tipo: 'INPUT_TEXTO', id: 'idCampoTexto', titulo: 'Campo de texto', valor: 'Texto' },
-    { tipo: 'INPUT_NUMERO', id: 'idCampoNumerico', titulo: 'Campo numerico', valor: 999 },
+    { tipo: 'INPUT_NUMERO', id: 'idCampoNumerico', titulo: 'Campo numérico', valor: 999 },
     { tipo: 'INPUT_DATA', id: 'idCampoData', titulo: 'Campo data', valor: '01/01/2000' },
   ],
   botaoOk: {
-    texto: 'Acao 1',
+    texto: 'Ação 1',
     url: 'http://api.local/ACAO1',
     body: { campo1: 'valor1', campo2: 123 },
   },
@@ -34,10 +34,10 @@ const FORMULARIO_ANEXO1 = {
 /** Tela SELECAO do exemplo do Anexo 1. */
 const SELECAO_ANEXO1 = {
   tipo: 'SELECAO',
-  titulo: 'Lista de selecao',
+  titulo: 'Lista de seleção',
   itens: [
-    { texto: 'Opcao 1', url: 'http://api.local/OPT1', body: { dadosOpcao: 'campo de teste' } },
-    { texto: 'Opcao 2', url: 'http://api.local/OPT2' },
+    { texto: 'Opção 1', url: 'http://api.local/OPT1', body: { dadosOpcao: 'campo de teste' } },
+    { texto: 'Opção 2', url: 'http://api.local/OPT2' },
   ],
 };
 
@@ -51,28 +51,28 @@ describe('TelaRenderer', () => {
 
     render(<TelaRenderer urlInicial={URL} />);
 
-    expect(await screen.findByText('TITULO TELA')).toBeInTheDocument();
+    expect(await screen.findByText('TÍTULO TELA')).toBeInTheDocument();
     expect(screen.getByText('Lorem ipsum dolor sit amet.')).toBeInTheDocument();
     expect(screen.getByLabelText('Campo de texto')).toHaveValue('Texto');
-    expect(screen.getByLabelText('Campo numerico')).toHaveValue(999);
+    expect(screen.getByLabelText('Campo numérico')).toHaveValue(999);
     // O input nativo de data trabalha em ISO; o Anexo 1 usa dd/MM/yyyy.
     expect(screen.getByLabelText('Campo data')).toHaveValue('2000-01-01');
-    expect(screen.getByRole('button', { name: 'Acao 1' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ação 1' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cancelar' })).toBeInTheDocument();
   });
 
-  it('envia o body do botao mesclado com os valores digitados', async () => {
+  it('envia o body do botão mesclado com os valores digitados', async () => {
     axiosMock.get.mockResolvedValue({ data: FORMULARIO_ANEXO1 });
     axiosMock.post.mockResolvedValue({ data: SELECAO_ANEXO1 });
 
     render(<TelaRenderer urlInicial={URL} />);
-    await screen.findByText('TITULO TELA');
+    await screen.findByText('TÍTULO TELA');
 
     const campo = screen.getByLabelText('Campo de texto');
     await userEvent.clear(campo);
     await userEvent.type(campo, 'novo valor');
 
-    await userEvent.click(screen.getByRole('button', { name: 'Acao 1' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Ação 1' }));
 
     await waitFor(() => expect(axiosMock.post).toHaveBeenCalled());
 
@@ -89,14 +89,14 @@ describe('TelaRenderer', () => {
     });
   });
 
-  it('mantem o valor inicial de um campo que o usuario nao tocou', async () => {
+  it('mantém o valor inicial de um campo que o usuário não tocou', async () => {
     axiosMock.get.mockResolvedValue({ data: FORMULARIO_ANEXO1 });
     axiosMock.post.mockResolvedValue({ data: SELECAO_ANEXO1 });
 
     render(<TelaRenderer urlInicial={URL} />);
-    await screen.findByText('TITULO TELA');
+    await screen.findByText('TÍTULO TELA');
 
-    await userEvent.click(screen.getByRole('button', { name: 'Acao 1' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Ação 1' }));
     await waitFor(() => expect(axiosMock.post).toHaveBeenCalled());
 
     // Sem semear o estado com os valores iniciais, um campo pre-preenchido
@@ -110,9 +110,9 @@ describe('TelaRenderer', () => {
     axiosMock.post.mockResolvedValue({ data: FORMULARIO_ANEXO1 });
 
     render(<TelaRenderer urlInicial={URL} />);
-    await screen.findByText('Lista de selecao');
+    await screen.findByText('Lista de seleção');
 
-    await userEvent.click(screen.getByRole('button', { name: /Opcao 1/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Opção 1/ }));
 
     await waitFor(() => expect(axiosMock.post).toHaveBeenCalled());
     const [url, corpo] = axiosMock.post.mock.calls[0];
@@ -120,13 +120,13 @@ describe('TelaRenderer', () => {
     expect(corpo).toEqual({ dadosOpcao: 'campo de teste' });
   });
 
-  it('trata item de SELECAO sem body como navegacao, nao como acao', async () => {
+  it('trata item de SELECAO sem body como navegação, não como ação', async () => {
     axiosMock.get.mockResolvedValue({ data: SELECAO_ANEXO1 });
 
     render(<TelaRenderer urlInicial={URL} />);
-    await screen.findByText('Lista de selecao');
+    await screen.findByText('Lista de seleção');
 
-    await userEvent.click(screen.getByRole('button', { name: /Opcao 2/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Opção 2/ }));
 
     // Um item sem body apenas leva a outra tela. Dispararia um POST vazio sem
     // sentido — e, no caso da lista de pautas, um POST por item tocado.
@@ -136,11 +136,11 @@ describe('TelaRenderer', () => {
     expect(axiosMock.post).not.toHaveBeenCalled();
   });
 
-  it('nao envia dados ao acionar o botao Cancelar', async () => {
+  it('não envia dados ao acionar o botão Cancelar', async () => {
     axiosMock.get.mockResolvedValue({ data: FORMULARIO_ANEXO1 });
 
     render(<TelaRenderer urlInicial={URL} />);
-    await screen.findByText('TITULO TELA');
+    await screen.findByText('TÍTULO TELA');
 
     await userEvent.click(screen.getByRole('button', { name: 'Cancelar' }));
 
@@ -151,7 +151,7 @@ describe('TelaRenderer', () => {
     expect(axiosMock.post).not.toHaveBeenCalled();
   });
 
-  it('trata botaoOk sem body como navegacao, nao como acao', async () => {
+  it('trata botaoOk sem body como navegação, não como ação', async () => {
     axiosMock.get.mockResolvedValue({
       data: {
         tipo: 'FORMULARIO',
@@ -200,7 +200,7 @@ describe('TelaRenderer', () => {
     expect(screen.getByRole('button', { name: 'Ok' })).toBeInTheDocument();
   });
 
-  it('exibe mensagem quando a API esta indisponivel', async () => {
+  it('exibe mensagem quando a API está indisponivel', async () => {
     axiosMock.get.mockRejectedValue(new Error('falha de rede'));
     axiosMock.isAxiosError.mockReturnValue(false);
 

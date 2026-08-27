@@ -37,7 +37,7 @@ export function mensagemDeErro(erro: unknown): string {
     if (problema?.detail) return problema.detail;
     if (problema?.title) return problema.title;
     if (erro.code === 'ECONNABORTED') {
-      return 'A requisicao demorou demais. Verifique se a API esta no ar.';
+      return 'A requisição demorou demais. Verifique se a API está no ar.';
     }
     if (!erro.response) {
       return `Nao foi possivel falar com a API em ${BASE_URL}. Ela esta rodando?`;

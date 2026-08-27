@@ -2,7 +2,7 @@ export function Contador({ segundos, aberta }: { segundos: number; aberta: boole
   // Os segundos vêm do servidor a cada revalidação. Um setInterval local
   // divergiria do relógio dele com a aba em segundo plano.
   if (!aberta) {
-    return <p className="contador contador--encerrado">Votacao encerrada</p>;
+    return <p className="contador contador--encerrado">Votação encerrada</p>;
   }
 
   const minutos = Math.floor(segundos / 60);

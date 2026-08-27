@@ -22,7 +22,7 @@ export function PainelResultado({ resultado }: { resultado: Resultado }) {
   return (
     <div className="cartao">
       <div className="cartao-cabecalho">
-        <h2 className="cartao-titulo">Apuracao</h2>
+        <h2 className="cartao-titulo">Apuração</h2>
         {resultado.parcial && <span className="selo selo--parcial">Parcial</span>}
       </div>
 
@@ -38,11 +38,11 @@ export function PainelResultado({ resultado }: { resultado: Resultado }) {
       <dl className="numeros">
         <div>
           <dt>Sim</dt>
-          <dd className="numero numero--sim">{resultado.votosSim}</dd>
+          <dd className="número número--sim">{resultado.votosSim}</dd>
         </div>
         <div>
-          <dt>Nao</dt>
-          <dd className="numero numero--nao">{resultado.votosNao}</dd>
+          <dt>Não</dt>
+          <dd className="número número--não">{resultado.votosNao}</dd>
         </div>
         <div>
           <dt>Total</dt>

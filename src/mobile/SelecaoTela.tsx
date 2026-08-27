@@ -40,7 +40,7 @@ export function SelecaoTela({ tela, desabilitado, aoAcionar, aoNavegar }: Props)
       </ul>
 
       {(tela.itens ?? []).length === 0 && (
-        <p className="tela-texto">Nenhuma opcao disponivel.</p>
+        <p className="tela-texto">Nenhuma opção disponível.</p>
       )}
     </div>
   );

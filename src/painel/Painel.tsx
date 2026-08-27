@@ -52,7 +52,7 @@ export function Painel() {
           />
         ) : (
           <div className="vazio">
-            <p>Selecione uma pauta para abrir a sessao, votar e acompanhar a apuracao.</p>
+            <p>Selecione uma pauta para abrir a sessão, votar e acompanhar a apuração.</p>
           </div>
         )}
       </section>

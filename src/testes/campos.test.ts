@@ -18,13 +18,13 @@ describe('conversao de data do Anexo 1', () => {
     expect(paraBrasileiro('2000-01-01')).toBe('01/01/2000');
   });
 
-  it('devolve string vazia para entrada invalida em vez de quebrar', () => {
+  it('devolve string vazia para entrada inválida em vez de quebrar', () => {
     expect(paraIso('')).toBe('');
-    expect(paraIso('nao e data')).toBe('');
+    expect(paraIso('não e data')).toBe('');
     expect(paraBrasileiro('')).toBe('');
   });
 
-  it('faz a ida e a volta sem perder informacao', () => {
+  it('faz a ida e a volta sem perder informação', () => {
     expect(paraBrasileiro(paraIso('15/03/2026'))).toBe('15/03/2026');
   });
 });
