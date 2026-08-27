@@ -1,11 +1,3 @@
-/**
- * Tipos da API REST v1, usados pelo painel administrativo.
- *
- * Separados dos tipos de tela (`src/mobile/types.ts`) de proposito: sao dois
- * contratos independentes, e misturar os dois faria uma mudanca em um vazar
- * para o outro.
- */
-
 /** Situacao de uma sessao de votacao. */
 export type StatusSessao = 'ABERTA' | 'FECHADA';
 

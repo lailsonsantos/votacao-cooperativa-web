@@ -2,9 +2,6 @@
 
 /**
  * Variaveis de ambiente da aplicacao.
- *
- * Declaradas aqui para que o TypeScript recuse um `import.meta.env.VITE_TYPO`,
- * que de outra forma seria `any` e falharia silenciosamente em producao.
  */
 interface ImportMetaEnv {
   /** URL base da API, sem o sufixo /api/v1. */

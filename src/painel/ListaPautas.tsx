@@ -51,9 +51,6 @@ export function ListaPautas({ pautas, selecionada, aoSelecionar }: Props) {
 /**
  * Formata um instante ISO no fuso do navegador.
  *
- * O backend trabalha inteiramente em UTC; a conversao para o fuso local acontece
- * aqui, na borda de apresentacao, que e o unico lugar onde ela e correta.
- *
  * @param iso instante em formato ISO 8601
  * @returns data e hora legiveis em pt-BR
  */

@@ -1,12 +1,3 @@
-/**
- * Tipos que espelham exatamente o contrato de telas do Anexo 1 do enunciado.
- *
- * Estes tipos sao a fronteira entre o servidor e o renderizador. Manter uma
- * uniao discriminada por `tipo` faz o TypeScript exigir o tratamento de cada
- * variante: se o backend passar a emitir um tipo novo e ele for adicionado aqui,
- * o compilador aponta todos os lugares que precisam mudar.
- */
-
 /** Tipos de tela que o cliente sabe renderizar. */
 export type TipoTela = 'FORMULARIO' | 'SELECAO';
 
@@ -32,9 +23,6 @@ export interface ItemInput {
 
 /**
  * Item de uma tela FORMULARIO.
- *
- * O `unknown` na variante final e deliberado: um cliente Server-Driven UI
- * precisa sobreviver a um servidor mais novo do que ele. Ver `CampoDesconhecido`.
  */
 export type ItemTela = ItemTexto | ItemInput | { tipo: string; [chave: string]: unknown };
 
@@ -76,9 +64,6 @@ export type Tela = TelaFormulario | TelaSelecao;
 
 /**
  * Verifica se um item e um campo de entrada.
- *
- * Escrito como *type guard* para que o TypeScript estreite o tipo dentro do
- * bloco, evitando casts espalhados pelo renderizador.
  *
  * @param item item vindo do servidor
  * @returns true quando o item aceita entrada do usuario

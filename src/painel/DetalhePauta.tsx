@@ -14,12 +14,6 @@ interface Props {
 /**
  * Detalhe de uma pauta: abertura de sessao, votacao e apuracao.
  *
- * O conteudo varia conforme o estado da sessao — inexistente, aberta ou
- * encerrada — pela mesma logica que a camada de telas aplica no servidor. Aqui,
- * porem, a decisao e do cliente, porque o painel consome a API REST e nao o
- * protocolo Server-Driven UI. E a diferenca entre as duas superficies, visivel
- * lado a lado.
- *
  * @param props identificador da pauta e callback de retorno
  * @returns o detalhe da pauta
  */
@@ -38,18 +32,12 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
   /**
    * Envia o voto do CPF informado.
    *
-   * O CPF segue como digitado. Validar os digitos verificadores aqui daria falsa
-   * confianca — 11111111111 tem onze digitos e ainda assim nao e um CPF valido —
-   * e criaria uma segunda copia da regra, que passaria a divergir do servidor.
-   * A validacao e do backend; a tela apenas exibe o que ele responde.
-   *
    * @param opcao opcao escolhida
    */
   function enviarVoto(opcao: OpcaoVoto) {
     registrar.mutate(
       { pautaId, cpf, opcao },
-      // O CPF e limpo apos o voto para que a proxima pessoa use o mesmo
-      // dispositivo sem herdar o numero de quem votou antes.
+      // Limpa o CPF pra proxima pessoa nao herdar o numero de quem votou antes.
       { onSuccess: () => setCpf('') },
     );
   }

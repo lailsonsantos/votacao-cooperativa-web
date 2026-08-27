@@ -2,11 +2,6 @@ import axios from 'axios';
 
 /**
  * Cliente HTTP compartilhado pela aplicacao.
- *
- * A URL base vem de variavel de ambiente e nao do codigo: o mesmo build precisa
- * funcionar em desenvolvimento, em rede local (para abrir de um celular) e na
- * nuvem. E o espelho, no frontend, da mesma decisao que o backend tomou para as
- * URLs de callback das telas.
  */
 export const BASE_URL: string =
   import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080';
@@ -30,11 +25,8 @@ export interface ProblemDetail {
 }
 
 /**
- * Extrai uma mensagem legivel de um erro de requisicao.
- *
- * O backend devolve ProblemDetail com `detail` ja escrito para o usuario final,
- * entao a regra e preferir esse texto a qualquer mensagem tecnica do axios. Uma
- * mensagem como "Request failed with status code 409" nao ajuda ninguem.
+ * Extrai a mensagem de erro do ProblemDetail. O backend ja escreve o texto para
+ * o usuario final, entao prefiro ele a qualquer mensagem do axios.
  *
  * @param erro erro capturado na chamada
  * @returns mensagem apresentavel na interface

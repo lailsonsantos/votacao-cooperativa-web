@@ -9,13 +9,6 @@ type Aba = 'painel' | 'simulador';
 /**
  * Casca da aplicacao, com as duas visoes lado a lado.
  *
- * A aplicacao existe para demonstrar as **duas superficies** que o backend
- * expoe, e a troca entre abas deixa a diferenca visivel:
- *
- * - **Painel** consome a API REST `/api/v1` e monta a interface no cliente;
- * - **Simulador** consome `/api/v1/telas` e renderiza o que o servidor manda,
- *   sem conhecer o dominio.
- *
  * @returns a aplicacao completa
  */
 export function App() {

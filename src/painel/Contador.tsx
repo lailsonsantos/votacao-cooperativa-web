@@ -1,15 +1,6 @@
-/**
- * Exibe o tempo restante da sessao de votacao.
- *
- * O valor vem do servidor a cada revalidacao, e nao de um `setInterval` local:
- * um contador puramente local divergiria do relogio do servidor conforme a aba
- * ficasse em segundo plano, e passaria a mentir sobre o prazo real.
- *
- * @param props.segundos segundos restantes informados pela API
- * @param props.aberta se a sessao ainda aceita votos
- * @returns o contador formatado
- */
 export function Contador({ segundos, aberta }: { segundos: number; aberta: boolean }) {
+  // Os segundos vem do servidor a cada revalidacao. Um setInterval local
+  // divergiria do relogio dele com a aba em segundo plano.
   if (!aberta) {
     return <p className="contador contador--encerrado">Votacao encerrada</p>;
   }

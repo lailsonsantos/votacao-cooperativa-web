@@ -6,11 +6,6 @@ import { TelaRenderer } from '../mobile/TelaRenderer';
 
 /**
  * Testes do renderizador generico das telas do Anexo 1.
- *
- * As telas usadas aqui sao **os exemplos literais do PDF**. Se o renderizador
- * monta corretamente esses payloads e envia o corpo correto ao acionar uma acao,
- * ele renderiza qualquer tela que o backend produza — porque ele nao conhece o
- * dominio, apenas o protocolo.
  */
 
 vi.mock('axios');

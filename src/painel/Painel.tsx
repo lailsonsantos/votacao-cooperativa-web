@@ -8,15 +8,6 @@ import { mensagemDeErro } from '../api/cliente';
 /**
  * Painel administrativo: consome a API REST v1 diretamente.
  *
- * Existe para demonstrar que a superficie REST tambem e completa e utilizavel,
- * ao lado do simulador que exercita a camada de telas. Sao dois contratos
- * independentes sobre o mesmo nucleo, e o painel prova que o primeiro funciona
- * sem depender do segundo.
- *
- * O layout e de duas colunas no desktop e de coluna unica no celular, com a
- * pauta selecionada assumindo a tela inteira — decidido por CSS, sem duplicar
- * componentes por tamanho de tela.
- *
  * @returns o painel administrativo
  */
 export function Painel() {

@@ -15,10 +15,6 @@ export interface PropsCampo {
 /**
  * Renderiza um item do tipo INPUT_TEXTO.
  *
- * O `id` do item vira o `id` do elemento e o `htmlFor` do rotulo: alem de ser o
- * que o Anexo 1 define como chave do valor no POST, isso deixa o rotulo
- * clicavel e legivel por leitor de tela.
- *
  * @param props campos do item, valor atual e callback de alteracao
  * @returns o campo de entrada de texto
  */

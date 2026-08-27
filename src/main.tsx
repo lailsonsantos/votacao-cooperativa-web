@@ -4,13 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App } from './App';
 import './estilos/global.css';
 
-/**
- * Cliente do React Query.
- *
- * `retry: 1` evita repetir chamadas que falharam por regra de negocio: um `409`
- * de voto duplicado nunca vai virar sucesso, e insistir so atrasa a mensagem de
- * erro que o usuario precisa ver.
- */
+// retry: 1 porque um 409 de voto duplicado nunca vira sucesso; insistir so
+// atrasa a mensagem de erro.
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

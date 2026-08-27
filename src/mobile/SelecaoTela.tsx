@@ -11,14 +11,6 @@ interface Props {
 /**
  * Renderiza uma tela do tipo SELECAO do Anexo 1.
  *
- * Cada item funciona como um botao. O Anexo 1 descreve o comportamento como
- * "semelhante ao funcionamento dos botoes da tela FORMULARIO": ao acionar, envia
- * POST para a URL com o `body` do item.
- *
- * Itens **sem** `body` sao tratados como navegacao (GET). Essa distincao evita
- * que a lista de pautas, cujos itens so levam a outra tela, dispare um POST sem
- * sentido em cada toque.
- *
  * @param props tela e callbacks de interacao
  * @returns a lista de opcoes renderizada
  */
@@ -30,6 +22,8 @@ export function SelecaoTela({ tela, desabilitado, aoAcionar, aoNavegar }: Props)
       <ul className="tela-lista">
         {(tela.itens ?? []).map((item, indice) => (
           <li key={`${item.url}-${indice}`}>
+            {/* Com body e acao (POST); sem body e so navegacao (GET). Senao a
+                lista de pautas dispararia um POST por item tocado. */}
             <button
               type="button"
               className="tela-opcao"

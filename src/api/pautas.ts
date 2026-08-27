@@ -3,10 +3,6 @@ import type { OpcaoVoto, Pagina, Pauta, Resultado, Sessao } from './tipos';
 
 /**
  * Funcoes de acesso a API REST v1.
- *
- * Isolar as chamadas aqui mantem os componentes livres de detalhes de rota e
- * concentra em um unico arquivo tudo que precisa mudar se a API evoluir para
- * `/api/v2`.
  */
 
 /**
@@ -53,6 +49,7 @@ export async function criarPauta(titulo: string, descricao: string): Promise<Pau
  * @param duracaoMinutos duracao desejada. Omitido, o corpo segue sem a
  *                       propriedade e o servidor aplica o proprio padrao —
  *                       o valor desse padrao e decisao do backend
+ *
  * @returns a sessao aberta
  */
 export async function abrirSessao(
@@ -67,10 +64,6 @@ export async function abrirSessao(
 
 /**
  * Consulta a sessao de uma pauta.
- *
- * Devolve `null` quando a pauta ainda nao teve sessao aberta: a API responde
- * `409` nesse caso, que e um estado esperado do fluxo e nao um erro a propagar
- * para a interface.
  *
  * @param pautaId identificador da pauta
  * @returns a sessao, ou null se ainda nao existir

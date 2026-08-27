@@ -24,16 +24,6 @@ export interface EstadoTela {
 /**
  * Estado e navegacao do cliente Server-Driven UI.
  *
- * Este hook implementa o protocolo do Anexo 1 e nada alem dele. Ele nao sabe o
- * que e pauta, sessao ou voto: recebe uma tela, guarda os valores digitados
- * indexados pelo `id` de cada campo e, ao acionar uma acao, envia
- * `{ ...body, ...valoresDigitados }` para a URL indicada e renderiza a tela que
- * voltar.
- *
- * E essa ignorancia deliberada sobre o dominio que faz o simulador servir como
- * prova de que o backend cumpre o contrato: se ele funciona, o contrato esta
- * correto, porque nao ha nenhum conhecimento embutido para compensar uma falha.
- *
  * @param urlInicial URL da primeira tela a carregar
  * @returns o estado da tela atual e as acoes disponiveis
  */
@@ -45,11 +35,8 @@ export function useTela(urlInicial: string): EstadoTela {
   const [historico, setHistorico] = useState<string[]>([]);
 
   /**
-   * Preenche o estado dos campos com os valores iniciais vindos do servidor.
-   *
-   * O Anexo 1 permite que um `INPUT_*` traga `valor`. Sem esta semeadura, um
-   * campo pre-preenchido apareceria na tela mas nao seria enviado caso o usuario
-   * nao o tocasse — um bug silencioso e dificil de rastrear.
+   * Semeia o estado com os valores iniciais que vieram do servidor. Sem isso, um
+   * campo ja preenchido apareceria na tela mas nao seria enviado.
    *
    * @param itens itens da tela recem-carregada
    * @returns o mapa de valores iniciais
@@ -104,11 +91,6 @@ export function useTela(urlInicial: string): EstadoTela {
 
   /**
    * Executa uma acao por POST e renderiza a tela devolvida.
-   *
-   * O corpo enviado e o `body` definido pelo servidor mesclado com os valores
-   * digitados — exatamente a regra descrita no Anexo 1. A ordem importa: os
-   * valores do usuario vem depois, porque um campo editavel deve sobrescrever o
-   * valor sugerido pelo servidor.
    *
    * @param url URL absoluta da acao
    * @param corpo corpo fixo definido no botao ou no item de selecao
@@ -171,7 +153,7 @@ export function useTela(urlInicial: string): EstadoTela {
 
   useEffect(() => {
     void carregar(urlInicial);
-    // Executa apenas na montagem: a URL inicial nao muda durante a sessao.
+    // So na montagem: a URL inicial nao muda.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

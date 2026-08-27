@@ -5,19 +5,12 @@ import { useTela, URL_TELA_INICIAL } from './hooks/useTela';
 /**
  * Renderizador generico das telas do Anexo 1.
  *
- * Este componente e o coracao do simulador de cliente. Ele **nao conhece o
- * dominio**: nao sabe o que e pauta, sessao ou voto. Recebe um JSON, decide
- * entre FORMULARIO e SELECAO pelo campo `tipo`, desenha o que veio, coleta os
- * valores pelos `id` dos campos e envia tudo de volta para a URL indicada.
- *
- * E justamente essa ignorancia que faz o componente servir como prova executavel
- * de que o backend cumpre o contrato do Anexo 1: nao ha nenhum conhecimento
- * embutido aqui para compensar uma resposta incorreta do servidor.
- *
  * @param props.urlInicial URL da primeira tela; util para teste
  * @returns o simulador com a tela corrente
  */
 export function TelaRenderer({ urlInicial = URL_TELA_INICIAL }: { urlInicial?: string }) {
+  // Este componente nao sabe o que e pauta, sessao ou voto. Le o JSON, escolhe
+  // entre FORMULARIO e SELECAO, e devolve o que o usuario preencheu.
   const {
     tela,
     carregando,

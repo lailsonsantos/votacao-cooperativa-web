@@ -19,9 +19,6 @@ interface Props {
 /**
  * Renderiza uma tela do tipo FORMULARIO do Anexo 1.
  *
- * A ordem dos itens e a do array recebido: a composicao da tela e decidida pelo
- * servidor, e o cliente nao reordena nem agrupa nada por conta propria.
- *
  * @param props tela, valores digitados e callbacks de interacao
  * @returns a tela renderizada
  */
@@ -71,8 +68,7 @@ export function FormularioTela({
             type="button"
             className="botao botao-secundario"
             disabled={desabilitado}
-            // Cancelar e navegacao pura: nunca envia dados, mesmo que o servidor
-            // informe um body. Confundir isso registraria voto ao cancelar.
+            // Cancelar so navega. Se enviasse dados, cancelar registraria voto.
             onClick={() => aoNavegar(tela.botaoCancelar!.url)}
           >
             {tela.botaoCancelar.texto}
@@ -85,10 +81,8 @@ export function FormularioTela({
             className="botao botao-primario"
             disabled={desabilitado}
             onClick={() =>
-              // Mesma regra aplicada aos itens de SELECAO: a presenca de `body`
-              // distingue acao de navegacao. Um botao sem `body` apenas leva a
-              // outra tela ("Voltar", "Atualizar") e deve usar GET; tratar tudo
-              // como POST tentaria enviar dados para um endpoint de leitura.
+              // Igual ao SELECAO: com `body` e acao (POST), sem `body` e navegacao
+              // (GET). "Voltar" e "Atualizar" caem no segundo caso.
               tela.botaoOk!.body
                 ? aoAcionar(tela.botaoOk!.url, tela.botaoOk!.body)
                 : aoNavegar(tela.botaoOk!.url)

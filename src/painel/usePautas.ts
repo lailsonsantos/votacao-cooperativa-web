@@ -11,10 +11,6 @@ import type { OpcaoVoto } from '../api/tipos';
 
 /**
  * Hooks de acesso a API REST para o painel administrativo.
- *
- * O React Query cuida de cache, revalidacao e estados de carga. A alternativa —
- * `useEffect` com `useState` — exigiria reimplementar tudo isso a mao em cada
- * componente, e e onde nascem os bugs de tela desatualizada apos uma acao.
  */
 
 /** Chaves de cache, centralizadas para que a invalidacao nunca erre o alvo. */
@@ -38,10 +34,6 @@ export function usePautas() {
 
 /**
  * Consulta a sessao de uma pauta, atualizando enquanto ela estiver aberta.
- *
- * O `refetchInterval` condicional e o ponto central: enquanto a sessao esta
- * aberta, o contador precisa acompanhar o tempo real; depois do fechamento,
- * continuar consultando seria trafego inutil.
  *
  * @param pautaId identificador da pauta, ou null para desabilitar a consulta
  * @returns o resultado da consulta da sessao

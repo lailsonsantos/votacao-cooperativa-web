@@ -11,10 +11,6 @@ const DESCRICAO: Record<Resultado['resultado'], string> = {
 /**
  * Exibe a apuracao de uma pauta com barra proporcional de votos.
  *
- * A tarja "parcial" e explicita porque o backend permite consultar o resultado
- * com a sessao aberta. Sem esse aviso, um numero intermediario poderia ser lido
- * como final — que e exatamente o tipo de mal-entendido caro em uma assembleia.
- *
  * @param props.resultado apuracao devolvida pela API
  * @returns o painel de resultado
  */
