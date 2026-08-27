@@ -9,8 +9,9 @@ dist-ssr/
 .env.local
 .env.*.local
 
-# IDEs
+# IDEs — configuracao local nao pertence ao repositorio.
 .idea/
+.run/
 *.iml
 .vscode/*
 !.vscode/extensions.json
@@ -21,3 +22,6 @@ dist-ssr/
 # Logs
 *.log
 npm-debug.log*
+
+# Documentacao vive apenas no README.md.
+docs/
