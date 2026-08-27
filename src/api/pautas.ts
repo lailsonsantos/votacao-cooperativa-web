@@ -50,7 +50,9 @@ export async function criarPauta(titulo: string, descricao: string): Promise<Pau
  * Abre a sessao de votacao de uma pauta.
  *
  * @param pautaId identificador da pauta
- * @param duracaoMinutos duracao desejada; omitido aplica o padrao de 1 minuto
+ * @param duracaoMinutos duracao desejada. Omitido, o corpo segue sem a
+ *                       propriedade e o servidor aplica o proprio padrao —
+ *                       o valor desse padrao e decisao do backend
  * @returns a sessao aberta
  */
 export async function abrirSessao(

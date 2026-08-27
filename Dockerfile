@@ -1,11 +1,3 @@
-# ---------------------------------------------------------------------------
-# Build multi-estagio do cliente web.
-#
-# O Vite injeta VITE_API_BASE_URL em tempo de BUILD, nao de execucao: por isso a
-# URL da API entra como argumento de build. Trocar a API exige rebuild da imagem,
-# que e o comportamento esperado de um bundle estatico.
-# ---------------------------------------------------------------------------
-
 FROM node:22-alpine AS build
 WORKDIR /app
 
@@ -19,8 +11,6 @@ COPY . .
 ARG VITE_API_BASE_URL=http://localhost:8080
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
-
-# ---------------------------------------------------------------------------
 
 FROM nginx:1.27-alpine AS runtime
 

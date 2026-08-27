@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
  * Configuracao do Vite.
  *
  * O `preview` escuta em 0.0.0.0 e respeita a variavel PORT porque plataformas
- * de nuvem (Heroku, Render) injetam a porta em tempo de execucao e recusam um
+ * de nuvem injetam a porta em tempo de execucao e recusam um
  * processo que escute apenas em localhost.
  */
 export default defineConfig({

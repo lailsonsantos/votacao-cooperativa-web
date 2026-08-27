@@ -24,7 +24,7 @@ interface Props {
  * @returns o detalhe da pauta
  */
 export function DetalhePauta({ pautaId, aoVoltar }: Props) {
-  const [duracao, setDuracao] = useState(1);
+  const [duracao, setDuracao] = useState('');
   const [cpf, setCpf] = useState('');
 
   const sessao = useSessao(pautaId);
@@ -36,16 +36,18 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
   const aberta = sessao.data?.status === 'ABERTA';
 
   /**
-   * Registra o voto do CPF informado.
+   * Envia o voto do CPF informado.
+   *
+   * O CPF segue como digitado. Validar os digitos verificadores aqui daria falsa
+   * confianca — 11111111111 tem onze digitos e ainda assim nao e um CPF valido —
+   * e criaria uma segunda copia da regra, que passaria a divergir do servidor.
+   * A validacao e do backend; a tela apenas exibe o que ele responde.
    *
    * @param opcao opcao escolhida
    */
   function enviarVoto(opcao: OpcaoVoto) {
-    const somenteDigitos = cpf.replace(/\D/g, '');
-    if (somenteDigitos.length !== 11) return;
-
     registrar.mutate(
-      { pautaId, cpf: somenteDigitos, opcao },
+      { pautaId, cpf, opcao },
       // O CPF e limpo apos o voto para que a proxima pessoa use o mesmo
       // dispositivo sem herdar o numero de quem votou antes.
       { onSuccess: () => setCpf('') },
@@ -64,7 +66,8 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
         <div className="cartao">
           <h2 className="cartao-titulo">Abrir sessao de votacao</h2>
           <p className="texto-suave">
-            Nenhuma sessao foi aberta para esta pauta.
+            Nenhuma sessao foi aberta para esta pauta. Deixe a duracao em branco
+            para usar o padrao definido pelo servidor.
           </p>
 
           <div className="campo">
@@ -73,9 +76,9 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
               id="duracao"
               type="number"
               inputMode="numeric"
-              min={1}
+              placeholder="1"
               value={duracao}
-              onChange={(e) => setDuracao(Number(e.target.value))}
+              onChange={(e) => setDuracao(e.target.value)}
             />
           </div>
 
@@ -88,8 +91,13 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
           <button
             type="button"
             className="botao botao-primario"
-            disabled={abrir.isPending || duracao < 1}
-            onClick={() => abrir.mutate({ pautaId, duracao })}
+            disabled={abrir.isPending}
+            onClick={() =>
+              abrir.mutate({
+                pautaId,
+                duracao: duracao.trim() === '' ? undefined : Number(duracao),
+              })
+            }
           >
             {abrir.isPending ? 'Abrindo…' : 'Abrir sessao'}
           </button>
@@ -140,7 +148,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
             <button
               type="button"
               className="botao botao-sim"
-              disabled={registrar.isPending || cpf.replace(/\D/g, '').length !== 11}
+              disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('SIM')}
             >
               Sim
@@ -148,7 +156,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
             <button
               type="button"
               className="botao botao-nao"
-              disabled={registrar.isPending || cpf.replace(/\D/g, '').length !== 11}
+              disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('NAO')}
             >
               Nao
