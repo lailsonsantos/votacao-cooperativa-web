@@ -5,6 +5,13 @@ desktop e celular a partir de uma única base de código.
 
 **Backend (repositório separado):** https://github.com/lailsonsantos/votacao-cooperativa-api
 
+## No ar
+
+**https://votacao-cooperativa-web.onrender.com**
+
+Duas abas: **Painel** consome a API REST; **Simulador** renderiza as telas do
+Anexo 1 servidas por https://votacao-cooperativa-api.onrender.com/api/v1/telas.
+
 ---
 
 ## O que é
