@@ -196,11 +196,11 @@ describe('TelaRenderer', () => {
     // O item conhecido continua renderizando: um cliente Server-Driven UI
     // publicado em loja precisa sobreviver a um servidor mais novo que ele.
     expect(await screen.findByText('Item conhecido')).toBeInTheDocument();
-    expect(screen.getByText(/nao suportado nesta versao/i)).toBeInTheDocument();
+    expect(screen.getByText(/não suportado nesta versão/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ok' })).toBeInTheDocument();
   });
 
-  it('exibe mensagem quando a API está indisponivel', async () => {
+  it('exibe mensagem quando a API está indisponível', async () => {
     axiosMock.get.mockRejectedValue(new Error('falha de rede'));
     axiosMock.isAxiosError.mockReturnValue(false);
 

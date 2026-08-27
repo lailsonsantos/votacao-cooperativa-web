@@ -3,7 +3,7 @@ export function CampoDesconhecido({ tipo }: { tipo: string }) {
   // vira aviso em vez de quebrar a tela inteira.
   return (
     <p className="tela-desconhecido" role="note">
-      Campo nao suportado nesta versao do aplicativo: <code>{tipo}</code>
+      Campo não suportado nesta versão do aplicativo: <code>{tipo}</code>
     </p>
   );
 }

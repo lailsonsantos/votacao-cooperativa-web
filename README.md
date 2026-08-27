@@ -242,6 +242,24 @@ literais do PDF**:
 | API indisponível exibe alerta | Erro legível em vez de tela em branco |
 | Conversão de data (5 casos) | `dd/MM/yyyy` ↔ ISO, ida e volta |
 
+O `npm run build` roda `tsc -b` antes do bundle, então um erro de tipo derruba o
+build — não existe um caminho que gere `dist/` com o TypeScript quebrado.
+
+---
+
+### Verificação manual
+
+As duas abas foram percorridas com a API no ar:
+
+| Aba | Fluxo conferido |
+|---|---|
+| **Painel** | Cadastro de pauta, seleção na lista, contador da sessão, voto Sim/Não e apuração parcial atualizando na hora |
+| **Simulador** | Menu → lista de pautas → `FORMULARIO` de CPF → `SELECAO` Sim/Não → tela de resultado, e o voto repetido caindo na tela de erro com a mensagem do servidor |
+
+O erro na aba Simulador chega como tela, não como falha de rede: o servidor
+devolve um `FORMULARIO` com *"Você já registrou seu voto nesta pauta."* e HTTP
+`200`, e o renderizador o desenha sem saber que é um erro.
+
 ---
 
 ## Decisões

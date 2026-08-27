@@ -83,7 +83,7 @@ export function TelaRenderer({ urlInicial = URL_TELA_INICIAL }: { urlInicial?: s
         {/* Blindagem contra um tipo de tela que este cliente não conhece. */}
         {tela && tela.tipo !== 'FORMULARIO' && tela.tipo !== 'SELECAO' && (
           <div className="alerta alerta-aviso" role="alert">
-            Tipo de tela nao suportado nesta versao do aplicativo:{' '}
+            Tipo de tela não suportado nesta versão do aplicativo:{' '}
             <code>{String((tela as { tipo: string }).tipo)}</code>
           </div>
         )}

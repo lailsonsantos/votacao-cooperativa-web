@@ -42,7 +42,7 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
       <h2 className="cartao-titulo">Nova pauta</h2>
 
       <div className="campo">
-        <label htmlFor="titulo">Titulo</label>
+        <label htmlFor="titulo">Título</label>
         <input
           id="titulo"
           value={titulo}
@@ -73,7 +73,7 @@ export function NovaPautaForm({ aoCriar }: { aoCriar: (pauta: Pauta) => void }) 
 
       <button
         type="submit"
-        className="botão botão-primario"
+        className="botao botao-primario"
         disabled={criar.isPending || !titulo.trim()}
       >
         {criar.isPending ? 'Cadastrando…' : 'Cadastrar pauta'}

@@ -78,7 +78,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
 
           <button
             type="button"
-            className="botão botão-primario"
+            className="botao botao-primario"
             disabled={abrir.isPending}
             onClick={() =>
               abrir.mutate({
@@ -95,7 +95,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
       {sessao.data && (
         <div className="cartao">
           <div className="cartao-cabecalho">
-            <h2 className="cartao-titulo">Sessao</h2>
+            <h2 className="cartao-titulo">Sessão</h2>
             <span className={`selo selo--${aberta ? 'aberta' : 'fechada'}`}>
               {sessao.data.status}
             </span>
@@ -135,7 +135,7 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
           <div className="botoes-voto">
             <button
               type="button"
-              className="botão botão-sim"
+              className="botao botao-sim"
               disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('SIM')}
             >
@@ -143,11 +143,11 @@ export function DetalhePauta({ pautaId, aoVoltar }: Props) {
             </button>
             <button
               type="button"
-              className="botão botão-não"
+              className="botao botao-nao"
               disabled={registrar.isPending || !cpf.trim()}
               onClick={() => enviarVoto('NAO')}
             >
-              Nao
+              Não
             </button>
           </div>
         </div>

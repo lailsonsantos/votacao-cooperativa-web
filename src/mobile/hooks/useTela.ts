@@ -25,7 +25,7 @@ export interface EstadoTela {
  * Estado e navegação do cliente Server-Driven UI.
  *
  * @param urlInicial URL da primeira tela a carregar
- * @returns o estado da tela atual e as ações disponiveis
+ * @returns o estado da tela atual e as ações disponíveis
  */
 export function useTela(urlInicial: string): EstadoTela {
   const [tela, setTela] = useState<Tela | null>(null);
@@ -125,7 +125,7 @@ export function useTela(urlInicial: string): EstadoTela {
     [carregar],
   );
 
-  /** Volta para a tela anterior do historico. */
+  /** Volta para a tela anterior do histórico. */
   const voltar = useCallback(() => {
     setHistorico((anterior) => {
       if (anterior.length < 2) return anterior;

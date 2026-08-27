@@ -1,12 +1,12 @@
 /* ===========================================================================
-   Estilos da aplicacao.
- 
-   Sem biblioteca de UI: sao poucas telas, e uma dependencia inteira de
-   componentes traria mais peso de bundle e de configuracao do que codigo
+   Estilos da aplicação.
+
+   Sem biblioteca de UI: são poucas telas, e uma dependência inteira de
+   componentes traria mais peso de bundle e de configuração do que código
    economizado.
 
-   O layout e responsivo por construcao: uma unica arvore de componentes serve
-   desktop e celular, e o que muda e o CSS. Nao existem componentes duplicados
+   O layout é responsivo por construção: uma única árvore de componentes serve
+   desktop e celular, e o que muda é o CSS. Não existem componentes duplicados
    por tamanho de tela.
    =========================================================================== */
 
@@ -178,7 +178,7 @@ body {
 .campo textarea,
 .tela-input {
   font-family: inherit;
-  /* 16px impede o zoom automatico do Safari no iOS ao focar um campo. */
+  /* 16px impede o zoom automático do Safari no iOS ao focar um campo. */
   font-size: 16px;
   padding: 0.55rem 0.7rem;
   border: 1px solid var(--rule);
@@ -203,7 +203,7 @@ body {
   border-radius: 6px;
   border: 1px solid transparent;
   cursor: pointer;
-  /* 44px e o alvo minimo confortavel para toque. */
+  /* 44px é o alvo mínimo confortável para toque. */
   min-height: 44px;
 }
 .botao:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -333,7 +333,7 @@ body {
 }
 
 /* Moldura de celular. No desktop tem largura fixa para parecer um aparelho; no
-   celular ocupa a largura disponivel, porque ja se esta num aparelho de fato. */
+   celular ocupa a largura disponível, porque já se está num aparelho de fato. */
 .moldura {
   background: #101713;
   border-radius: 28px;

@@ -3,11 +3,11 @@ import { Painel } from './painel/Painel';
 import { TelaRenderer } from './mobile/TelaRenderer';
 import { BASE_URL } from './api/cliente';
 
-/** Abas disponiveis na aplicação. */
+/** Abas disponíveis na aplicação. */
 type Aba = 'painel' | 'simulador';
 
 /**
- * Casca da aplicação, com as duas visoes lado a lado.
+ * Casca da aplicação, com as duas visões lado a lado.
  *
  * @returns a aplicação completa
  */
@@ -25,7 +25,7 @@ export function App() {
           </div>
         </div>
 
-        <nav className="abas" aria-label="Modo de visualizacao">
+        <nav className="abas" aria-label="Modo de visualização">
           <button
             type="button"
             className={`aba ${aba === 'painel' ? 'aba--ativa' : ''}`}
@@ -55,15 +55,15 @@ export function App() {
             <div className="simulador-explicacao">
               <h2>Cliente do Anexo 1</h2>
               <p>
-                O renderizador ao lado nao conhece pauta, sessao nem voto. Ele le o JSON
+                O renderizador ao lado não conhece pauta, sessão nem voto. Ele lê o JSON
                 devolvido por <code>/api/v1/telas</code>, decide entre{' '}
                 <code>FORMULARIO</code> e <code>SELECAO</code>, coleta os valores pelos{' '}
-                <code>id</code> dos campos e envia tudo de volta para a URL do botao.
+                <code>id</code> dos campos e envia tudo de volta para a URL do botão.
               </p>
               <p>
-                A navegacao inteira e dirigida pelo servidor: cada acao devolve a proxima
-                tela. Se o fluxo funciona aqui, o contrato do Anexo 1 esta correto — nao
-                ha nenhum conhecimento de dominio embutido no cliente para compensar.
+                A navegação inteira é dirigida pelo servidor: cada ação devolve a próxima
+                tela. Se o fluxo funciona aqui, o contrato do Anexo 1 está correto — não
+                há nenhum conhecimento de domínio embutido no cliente para compensar.
               </p>
             </div>
 
@@ -82,7 +82,7 @@ export function App() {
           target="_blank"
           rel="noreferrer"
         >
-          Repositorio da API
+          Repositório da API
         </a>
       </footer>
     </div>

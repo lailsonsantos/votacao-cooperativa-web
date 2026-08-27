@@ -38,11 +38,11 @@ export function PainelResultado({ resultado }: { resultado: Resultado }) {
       <dl className="numeros">
         <div>
           <dt>Sim</dt>
-          <dd className="número número--sim">{resultado.votosSim}</dd>
+          <dd className="numero numero--sim">{resultado.votosSim}</dd>
         </div>
         <div>
           <dt>Não</dt>
-          <dd className="número número--não">{resultado.votosNao}</dd>
+          <dd className="numero numero--nao">{resultado.votosNao}</dd>
         </div>
         <div>
           <dt>Total</dt>

@@ -13,7 +13,7 @@ export interface ItemTexto {
 /** Campo de entrada dentro de um FORMULARIO. */
 export interface ItemInput {
   tipo: 'INPUT_TEXTO' | 'INPUT_NUMERO' | 'INPUT_DATA';
-  /** Chave com que o valor digitado sera enviado no corpo do POST da ação. */
+  /** Chave com que o valor digitado será enviado no corpo do POST da ação. */
   id: string;
   /** Rotulo exibido acima do campo. */
   titulo?: string;

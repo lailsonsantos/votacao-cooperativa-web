@@ -15,7 +15,7 @@ export function paraIso(valor: string): string {
  * Converte `yyyy-MM-dd` de volta para `dd/MM/yyyy`, formato do Anexo 1.
  *
  * @param valor data em ISO vinda do input nativo
- * @returns a data no formato do Anexo 1, ou string vazia se invalida
+ * @returns a data no formato do Anexo 1, ou string vazia se inválida
  */
 export function paraBrasileiro(valor: string): string {
   const partes = valor.split('-');

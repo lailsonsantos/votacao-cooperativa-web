@@ -22,7 +22,7 @@ export function SelecaoTela({ tela, desabilitado, aoAcionar, aoNavegar }: Props)
       <ul className="tela-lista">
         {(tela.itens ?? []).map((item, indice) => (
           <li key={`${item.url}-${indice}`}>
-            {/* Com body e ação (POST); sem body e só navegação (GET). Senao a
+            {/* Com body e ação (POST); sem body e só navegação (GET). Senão a
                 lista de pautas dispararia um POST por item tocado. */}
             <button
               type="button"
