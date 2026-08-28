@@ -32,7 +32,12 @@ export function useTela(urlInicial: string): EstadoTela {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
   const [valores, setValores] = useState<ValoresCampos>({});
+  // Só URLs recarregáveis por GET entram aqui. A URL de uma ação responde apenas
+  // a POST: relê-la no "voltar" devolveria erro de método, não a tela anterior.
   const [historico, setHistorico] = useState<string[]>([]);
+  // Verdadeiro quando a tela atual veio de um POST e, por isso, não está no
+  // histórico — o destino do "voltar" passa a ser o topo da pilha, não o anterior.
+  const [atualEhAcao, setAtualEhAcao] = useState(false);
 
   /**
    * Semeia o estado com os valores iniciais que vieram do servidor. Sem isso, um
@@ -83,6 +88,9 @@ export function useTela(urlInicial: string): EstadoTela {
             anterior[anterior.length - 1] === url ? anterior : [...anterior, url],
           );
         }
+        // A tela atual voltou a ser uma URL recarregável, esteja ela no topo da
+        // pilha (navegação) ou já lá de antes (retorno).
+        setAtualEhAcao(false);
         aplicar(data);
       } catch (e) {
         // Requisição cancelada não é erro: quem cancelou já disparou outra.
@@ -111,7 +119,12 @@ export function useTela(urlInicial: string): EstadoTela {
       try {
         const payload = { ...corpo, ...valores };
         const { data } = await axios.post<Tela>(url, payload, { timeout: 10_000 });
-        setHistorico((anterior) => [...anterior, url]);
+        // A URL da ação NÃO entra no histórico: ela aceita apenas POST, e o
+        // "voltar" a releria com GET. O servidor responderia com a tela de
+        // "método não suportado" — e, antes da correção no backend, essa resposta
+        // saía sem cabeçalho de CORS, então o navegador a bloqueava e o usuário
+        // via "não foi possível falar com a API".
+        setAtualEhAcao(true);
         aplicar(data);
       } catch (e) {
         setErro(mensagemDeErro(e));
@@ -134,19 +147,29 @@ export function useTela(urlInicial: string): EstadoTela {
     [carregar],
   );
 
-  /** Volta para a tela anterior do histórico. */
+  /** Volta para a última tela recarregável por GET. */
   const voltar = useCallback(() => {
     setHistorico((anterior) => {
+      // Vindo de uma ação, a tela atual não está na pilha: o destino é o próprio
+      // topo, e nada é desempilhado.
+      if (atualEhAcao) {
+        const destino = anterior[anterior.length - 1];
+        if (destino === undefined) return anterior;
+        void carregar(destino, false);
+        return anterior;
+      }
+
       if (anterior.length < 2) return anterior;
       const destino = anterior[anterior.length - 2];
       void carregar(destino, false);
       return anterior.slice(0, -1);
     });
-  }, [carregar]);
+  }, [carregar, atualEhAcao]);
 
   /** Reinicia o simulador na tela inicial. */
   const reiniciar = useCallback(() => {
     setHistorico([]);
+    setAtualEhAcao(false);
     void carregar(urlInicial);
   }, [carregar, urlInicial]);
 
@@ -175,7 +198,8 @@ export function useTela(urlInicial: string): EstadoTela {
     carregando,
     erro,
     valores,
-    podeVoltar: historico.length > 1,
+    // Vindo de uma ação, basta uma tela na pilha para haver destino.
+    podeVoltar: atualEhAcao ? historico.length > 0 : historico.length > 1,
     definirValor,
     navegar,
     executar,

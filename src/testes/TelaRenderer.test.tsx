@@ -179,6 +179,44 @@ describe('TelaRenderer', () => {
     expect(axiosMock.post).not.toHaveBeenCalled();
   });
 
+  it('não relê a URL da ação ao voltar depois de um POST', async () => {
+    // Tela devolvida pelo POST, com um botão de navegação — como a de resultado,
+    // que oferece "Atualizar".
+    const TELA_POS_ACAO = {
+      tipo: 'FORMULARIO',
+      titulo: 'Resultado',
+      itens: [{ tipo: 'TEXTO', texto: 'Sim: 1 voto(s)' }],
+      botaoOk: { texto: 'Atualizar', url: 'http://api.local/resultado' },
+    };
+
+    axiosMock.get.mockResolvedValue({ data: SELECAO_ANEXO1 });
+    axiosMock.post.mockResolvedValue({ data: TELA_POS_ACAO });
+
+    render(<TelaRenderer urlInicial={URL} />);
+    await screen.findByText('Lista de seleção');
+
+    // 1. Ação: POST na URL da opção.
+    await userEvent.click(screen.getByRole('button', { name: /Opção 1/ }));
+    await screen.findByText('Resultado');
+
+    // 2. Navegação a partir da tela devolvida pela ação. É este passo que
+    //    enterrava a URL da ação no meio da pilha, em vez de deixá-la no topo.
+    await userEvent.click(screen.getByRole('button', { name: 'Atualizar' }));
+    await waitFor(() =>
+      expect(axiosMock.get).toHaveBeenCalledWith('http://api.local/resultado', expect.anything()),
+    );
+
+    // 3. Voltar.
+    axiosMock.get.mockClear();
+    await userEvent.click(screen.getByRole('button', { name: 'Voltar para a tela anterior' }));
+
+    // O destino é a última tela recarregável, e não a URL da ação: esta aceita
+    // apenas POST, e relê-la com GET devolvia erro de método — que o navegador
+    // ainda bloqueava por falta de cabeçalho de CORS na resposta.
+    await waitFor(() => expect(axiosMock.get).toHaveBeenCalledWith(URL, expect.anything()));
+    expect(axiosMock.get).not.toHaveBeenCalledWith('http://api.local/OPT1', expect.anything());
+  });
+
   it('não habilita o "voltar" na tela inicial quando o StrictMode monta duas vezes', async () => {
     axiosMock.get.mockResolvedValue({ data: SELECAO_ANEXO1 });
 
