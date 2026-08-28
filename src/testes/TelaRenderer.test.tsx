@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
@@ -176,6 +177,21 @@ describe('TelaRenderer', () => {
       ),
     );
     expect(axiosMock.post).not.toHaveBeenCalled();
+  });
+
+  it('não habilita o "voltar" na tela inicial quando o StrictMode monta duas vezes', async () => {
+    axiosMock.get.mockResolvedValue({ data: SELECAO_ANEXO1 });
+
+    render(
+      <StrictMode>
+        <TelaRenderer urlInicial={URL} />
+      </StrictMode>,
+    );
+    await screen.findByText('Lista de seleção');
+
+    // A montagem dupla empilhava a mesma URL duas vezes no histórico, e o
+    // "voltar" ficava habilitado já na primeira tela, sem ter para onde voltar.
+    expect(screen.getByRole('button', { name: 'Voltar para a tela anterior' })).toBeDisabled();
   });
 
   it('degrada graciosamente diante de um tipo de campo desconhecido', async () => {

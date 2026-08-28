@@ -185,6 +185,21 @@ endpoint de leitura.
 `INPUT_*` traga `valor`. Sem semear, um campo pré-preenchido apareceria na tela
 mas não seria enviado caso o usuário não o tocasse — bug silencioso.
 
+### A tela inicial é pedida duas vezes em desenvolvimento
+
+Com `npm run dev`, o `StrictMode` monta, desmonta e monta o componente de novo
+de propósito, para expor efeitos que não sobrevivem a isso. O resultado visível
+é um `GET /api/v1/telas` duplicado no DevTools. **Não acontece no bundle de
+produção**, que é o publicado no Render: lá sai uma requisição só.
+
+A duplicação não é o problema — ela revelou um: o histórico de navegação
+empilhava a mesma URL duas vezes, e o botão "‹ Voltar" ficava habilitado já na
+primeira tela, sem ter para onde voltar. O `useTela` passou a ignorar uma URL
+repetida em sequência e a cancelar a carga anterior por `AbortController`, de
+modo que a resposta mais antiga não sobrescreva a mais nova. O `StrictMode`
+continua ligado: suprimir a montagem dupla esconderia o próximo efeito frágil em
+vez de consertá-lo.
+
 ### Degradação graciosa
 
 Um cliente Server-Driven UI **precisa** sobreviver a um servidor mais novo que
@@ -226,7 +241,7 @@ Cuidados específicos de toque, verificados no navegador:
 npm test
 ```
 
-**14 testes.** Os payloads usados no teste do renderizador são **os exemplos
+**15 testes.** Os payloads usados no teste do renderizador são **os exemplos
 literais do PDF**:
 
 | Teste | O que protege |
@@ -239,6 +254,7 @@ literais do PDF**:
 | "Cancelar" não envia dados | Cancelar não pode registrar voto |
 | `botaoOk` sem `body` navega | Evita `405` no endpoint de resultado |
 | Campo desconhecido não quebra a tela | Sobrevivência a um servidor mais novo |
+| "Voltar" fica desabilitado sob `StrictMode` | Histórico não empilha a mesma URL na montagem dupla |
 | API indisponível exibe alerta | Erro legível em vez de tela em branco |
 | Conversão de data (5 casos) | `dd/MM/yyyy` ↔ ISO, ida e volta |
 

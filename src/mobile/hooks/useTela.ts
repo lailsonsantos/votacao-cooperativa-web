@@ -71,19 +71,28 @@ export function useTela(urlInicial: string): EstadoTela {
    * @param registrarHistorico se a tela atual deve entrar na pilha de retorno
    */
   const carregar = useCallback(
-    async (url: string, registrarHistorico = true) => {
+    async (url: string, registrarHistorico = true, sinal?: AbortSignal) => {
       setCarregando(true);
       setErro(null);
       try {
-        const { data } = await axios.get<Tela>(url, { timeout: 10_000 });
+        const { data } = await axios.get<Tela>(url, { timeout: 10_000, signal: sinal });
         if (registrarHistorico) {
-          setHistorico((anterior) => [...anterior, url]);
+          // A mesma URL duas vezes seguidas não empilha: o "voltar" levaria para
+          // a tela em que o usuário já está.
+          setHistorico((anterior) =>
+            anterior[anterior.length - 1] === url ? anterior : [...anterior, url],
+          );
         }
         aplicar(data);
       } catch (e) {
-        setErro(mensagemDeErro(e));
+        // Requisição cancelada não é erro: quem cancelou já disparou outra.
+        if (!axios.isCancel(e)) {
+          setErro(mensagemDeErro(e));
+        }
       } finally {
-        setCarregando(false);
+        if (!sinal?.aborted) {
+          setCarregando(false);
+        }
       }
     },
     [aplicar],
@@ -152,7 +161,11 @@ export function useTela(urlInicial: string): EstadoTela {
   }, []);
 
   useEffect(() => {
-    void carregar(urlInicial);
+    // O StrictMode monta, desmonta e monta de novo em desenvolvimento. Sem
+    // cancelar, a primeira carga chega depois da segunda e sobrescreve a tela.
+    const controlador = new AbortController();
+    void carregar(urlInicial, true, controlador.signal);
+    return () => controlador.abort();
     // Só na montagem: a URL inicial não muda.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
