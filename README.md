@@ -1,5 +1,11 @@
 # Votação Cooperativa — Web
 
+> **Fora do ar desde 16/09/2026.** O deploy no Render (serviço, site e banco)
+> foi desativado ao fim da demonstração, para não gerar cobrança — o plano
+> `starter` do `render.yaml` é pago. O código continua completo aqui, e o
+> `render.yaml` recria tudo em minutos por Blueprints, se for preciso.
+
+
 Cliente web responsivo de um sistema de **votação em assembleias de
 cooperativas**. Funciona em desktop e celular a partir de uma única base de
 código.
